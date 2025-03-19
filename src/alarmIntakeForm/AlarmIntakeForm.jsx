@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
-import html2pdf from 'html2pdf.js';
+// import html2pdf from 'html2pdf.js';
 import './AlarmIntakeForm.css';
+import handlePDF from '../utils/PDFCreator';
 
 
 function AlarmIntakeForm() {
@@ -11,27 +12,28 @@ function AlarmIntakeForm() {
         setSelected(e.target.value);
     };
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     console.log("Form submitted")
-    // }
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Form submitted");
-
-        // Generate and download PDF
-        const opt = {
-            margin: 10,
-            filename: 'alarm-intake.pdf',
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4' },
-        };
-
-        html2pdf()
-            .set(opt)
-            .from(formRef.current)
-            .save(); // save to local disk
-    };
+        handlePDF(formRef);
+    }
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log("Form submitted");
+    //
+    //     // Generate and download PDF
+    //     const opt = {
+    //         margin: 10,
+    //         filename: 'alarm-intake.pdf',
+    //         html2canvas: { scale: 2 },
+    //         jsPDF: { unit: 'mm', format: 'a4' },
+    //     };
+    //
+    //     html2pdf()
+    //         .set(opt)
+    //         .from(formRef.current)
+    //         .save(); // save to local disk
+    // };
     return (
         <div className="outer-container">
             <form ref={formRef} className="my_form" method="post" onSubmit={handleSubmit}>
