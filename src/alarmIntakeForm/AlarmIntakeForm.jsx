@@ -1,22 +1,40 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
+import html2pdf from 'html2pdf.js';
 import './AlarmIntakeForm.css';
-import { useState } from 'react';
 
 
 function AlarmIntakeForm() {
     const [selected, setSelected] = useState('');
+    const formRef = useRef();
 
     const handleChange = (e) => {
         setSelected(e.target.value);
     };
 
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log("Form submitted")
+    // }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Form submitted")
-    }
+        console.log("Form submitted");
+
+        // Generate and download PDF
+        const opt = {
+            margin: 10,
+            filename: 'alarm-intake.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4' },
+        };
+
+        html2pdf()
+            .set(opt)
+            .from(formRef.current)
+            .save(); // save to local disk
+    };
     return (
         <div className="outer-container">
-            <form onSubmit={handleSubmit}>
+            <form ref={formRef} className="my_form" method="post" onSubmit={handleSubmit}>
                 <div className="data-risk-object">
                     <h2>Gegevens-risico-object</h2>
                     <div className="ro-items">
