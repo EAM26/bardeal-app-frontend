@@ -1,0 +1,19 @@
+.outer-container {
+    padding: 100px;
+    /*background-color: green;*/
+}
+
+
+.data-risk-object {
+    display: flex;
+    flex-direction: column;
+}
+
+.ro-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.measure-items {
+    display: flex;
+}
