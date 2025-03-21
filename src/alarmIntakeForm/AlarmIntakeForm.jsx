@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import './AlarmIntakeForm.css';
 import handleIntakeForm from "../utils/postForm.js";
+import Button from "../components/Button.jsx";
 
 function AlarmIntakeForm() {
     const [selected, setSelected] = useState('');
@@ -11,13 +12,8 @@ function AlarmIntakeForm() {
     };
 
     const handleSubmit = async (e) => {
+        console.log("button clicked");
         e.preventDefault();
-        const success = await handleIntakeForm(formRef);
-        if (success) {
-            console.log("Form created and submitted");
-        } else {
-            console.log("Form submission failed");
-        }
     }
 
     return (
@@ -59,7 +55,7 @@ function AlarmIntakeForm() {
                         ))}
                     </div>
                 </div>
-                <button type="submit" >Submit</button>
+                <Button type="submit">Submit</Button>
             </form>
         </div>
     );
