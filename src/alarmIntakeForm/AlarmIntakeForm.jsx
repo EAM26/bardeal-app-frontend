@@ -1,22 +1,28 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import './AlarmIntakeForm.css';
-import { useState } from 'react';
-
+import handleIntakeForm from "../utils/postForm.js";
 
 function AlarmIntakeForm() {
     const [selected, setSelected] = useState('');
+    const formRef = useRef();
 
     const handleChange = (e) => {
         setSelected(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted")
+        const success = await handleIntakeForm(formRef);
+        if (success) {
+            console.log("Form created and submitted");
+        } else {
+            console.log("Form submission failed");
+        }
     }
+
     return (
         <div className="outer-container">
-            <form onSubmit={handleSubmit}>
+            <form ref={formRef} className="my_form" method="post" onSubmit={handleSubmit}>
                 <div className="data-risk-object">
                     <h2>Gegevens-risico-object</h2>
                     <div className="ro-items">

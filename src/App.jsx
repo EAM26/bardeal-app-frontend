@@ -1,8 +1,8 @@
 import './App.css'
 import {Route, Routes} from "react-router-dom";
-import Home from "./Home";
-import IntakeForm from "./IntakeForm.jsx";
-import AlarmIntakeForm from "./AlarmIntakeForm.jsx";
+import Home from "./home/Home.jsx";
+import IntakeForm from "./old/IntakeForm.jsx";
+import AlarmIntakeForm from "./alarmIntakeForm/AlarmIntakeForm.jsx";
 
 function App() {
 
