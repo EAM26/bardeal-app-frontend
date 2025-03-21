@@ -1,8 +1,6 @@
 import React, {useRef, useState} from 'react';
-// import html2pdf from 'html2pdf.js';
 import './AlarmIntakeForm.css';
-import handlePDF from '../utils/PDFCreator';
-
+import handleIntakeForm from "../utils/postForm.js";
 
 function AlarmIntakeForm() {
     const [selected, setSelected] = useState('');
@@ -12,28 +10,16 @@ function AlarmIntakeForm() {
         setSelected(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted");
-        handlePDF(formRef);
+        const success = await handleIntakeForm(formRef);
+        if (success) {
+            console.log("Form created and submitted");
+        } else {
+            console.log("Form submission failed");
+        }
     }
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     console.log("Form submitted");
-    //
-    //     // Generate and download PDF
-    //     const opt = {
-    //         margin: 10,
-    //         filename: 'alarm-intake.pdf',
-    //         html2canvas: { scale: 2 },
-    //         jsPDF: { unit: 'mm', format: 'a4' },
-    //     };
-    //
-    //     html2pdf()
-    //         .set(opt)
-    //         .from(formRef.current)
-    //         .save(); // save to local disk
-    // };
+
     return (
         <div className="outer-container">
             <form ref={formRef} className="my_form" method="post" onSubmit={handleSubmit}>
