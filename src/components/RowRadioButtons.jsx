@@ -1,9 +1,10 @@
 import React from 'react';
+import './RowRadioButtons.css';
 
-function RowRadioButtons({type, name, selected, handleChange, options}) {
+function RowRadioButtons({type, name, selected, handleChange, options, showLabel = true}) {
     return (
-        <div>
-            <p>{name}</p>
+        <div className="row-radio-buttons">
+            <p>{showLabel && name}</p>
 
             {options.map((option) => (
                 <label key={option}>
