@@ -1,7 +1,7 @@
 import html2pdf from "html2pdf.js";
 
 
-export async function handlePDF(form) {
+export async function handlePDF() {
 
     try {
         const opt = {
@@ -15,7 +15,7 @@ export async function handlePDF(form) {
 
         return await html2pdf()
             .set(opt)
-            .from(form)
+            .from(document.getElementById("pdf-content"))
             .outputPdf('blob');
     } catch (e) {
         console.error("PDF error: ", e);
