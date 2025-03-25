@@ -1,0 +1,12 @@
+.row-radio-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.split {
+    /*color: red;*/
+}
+.form-row {
+    display: flex;
+    /*background-color: blue;*/
+}

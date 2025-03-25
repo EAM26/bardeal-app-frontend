@@ -10,7 +10,7 @@ export async function handleIntakeForm (formRef)  {
             text: 'Alarm intake via PDF submit'
         };
 
-        const pdfBlob = await handlePDF(form);
+        const pdfBlob = await handlePDF();
         if (!pdfBlob) {
             console.error("PDF error");
             return false;
