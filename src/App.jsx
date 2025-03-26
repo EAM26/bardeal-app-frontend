@@ -1,8 +1,8 @@
 import './App.css'
 import {Route, Routes} from "react-router-dom";
-import Home from "./home/Home.jsx";
-import IntakeForm from "./old/IntakeForm.jsx";
-import AlarmIntakeForm from "./alarmIntakeForm/AlarmIntakeForm.jsx";
+import Home from "./pages/home/Home.jsx";
+import AlarmIntakeForm from "./pages/alarmIntakeForm/AlarmIntakeForm.jsx";
+import User from "./pages/User.jsx";
 
 function App() {
 
@@ -10,8 +10,8 @@ function App() {
     <>
       <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/intake-form" element={<IntakeForm />} />
           <Route path="/alarm" element={<AlarmIntakeForm />} />
+          <Route path="/user" element={<User />} />
       </Routes>
     </>
   )
