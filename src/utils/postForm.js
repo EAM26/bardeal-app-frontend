@@ -1,4 +1,5 @@
 import handlePDF from "./pdfCreate.js";
+import axios from "axios";
 
 export async function handleIntakeForm (formRef)  {
 
@@ -21,17 +22,14 @@ export async function handleIntakeForm (formRef)  {
         formData.append('alarmIntake', new Blob([JSON.stringify(alarmIntake)], {type: 'application/json'}));
         formData.append('pdfFile', pdfBlob, 'intakeformulier.pdf');
 
-        const response = await fetch('http://localhost:8080/alarm/intake/form', {
-            method: 'POST',
-            body: formData,
+        const response = await axios.post('http://localhost:8080/alarm', formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         });
 
-        if (!response.ok) {
-            console.error("Server responded with error status:", response.status);
-            return false;
-        }
-
-        return true;
+        return response.status === 200;
 
     } catch (e){
         console.error("Form submit error:", e);
