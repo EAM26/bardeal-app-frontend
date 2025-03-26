@@ -1,13 +1,13 @@
 import React from 'react';
 
-function Home() {
+function Login() {
     return (
         <div>
-            <h1>Homepage</h1>
+            <h1>Login Page</h1>
             <a href="http://localhost:8080/oauth2/authorization/google">Login with Google</a>
 
         </div>
     );
 }
 
-export default Home;
+export default Login;
