@@ -1,14 +1,14 @@
 import React, {useRef, useState} from 'react';
 import './AlarmIntakeForm.css';
-import Button from "../../components/Button.jsx";
-import RowRadioButtons from "../../components/RowRadioButtons.jsx";
-import FormRow from "../../components/FormRow.jsx";
-import InnerRowRBs from "../../components/InnerRowRBs.jsx";
-import  handleIntakeForm from "../../utils/postForm.js";
+import Button from "../../../components/Button.jsx";
+import RowRadioButtons from "../../../components/RowRadioButtons.jsx";
+import FormRow from "../../../components/FormRow.jsx";
+import InnerRowRBs from "../../../components/InnerRowRBs.jsx";
+import  handleIntakeForm from "../../../utils/postForm.js";
 
 function AlarmIntakeForm() {
     const [formValues, setFormValues] = useState('');
-    const formRef = useRef();
+    const formRef = useRef(null);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
