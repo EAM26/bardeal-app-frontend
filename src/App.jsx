@@ -18,49 +18,41 @@ function App() {
         <>
             <Navbar />
             <Routes>
-                {/* Public home/login page */}
-                <Route path="/login" element={<Login />} />
 
-                {/* Alarm intake: all roles */}
-                <Route
-                    path="/alarm"
-                    element={
-                        user
-                            ? <AlarmIntakeForm />
-                            : <Navigate to="/login" />
-                    }
+                <Route path="/login" element={
+                    user ? <Navigate to="/" /> : <Login />
+                } />
+
+                {/*<Route path="/alarm" element={*/}
+                {/*        user*/}
+                {/*            ? <AlarmIntakeForm />*/}
+                {/*            : <Navigate to="/login" />*/}
+                {/*    }*/}
+                {/*/>*/}
+                <Route path="/alarm" element={
+
+                            <AlarmIntakeForm />
+                }
                 />
-                <Route
-                    path="/"
-                    element={
+                <Route path="/" element={
                         user
                             ? <Home />
                             : <Navigate to="/login" />
                     }
                 />
-
-                {/* Alarms: admin + manager */}
-                <Route
-                    path="/alarms"
-                    element={
+                <Route path="/alarms" element={
                         user && (user.role === 'ADMIN' || user.role === 'MANAGER')
                             ? <Alarms />
                             : <Navigate to="/login" />
                     }
                 />
-
-                {/* Users: admin only */}
-                <Route
-                    path="/user"
-                    element={
+                <Route path="/user" element={
                         user && user.role === 'ADMIN'
                             ? <User />
                             : <Navigate to="/login" />
                     }
                 />
-                <Route
-                    path="/users"
-                    element={
+                <Route path="/users" element={
                         user && user.role === 'ADMIN'
                             ? <Users />
                             : <Navigate to="/login" />
