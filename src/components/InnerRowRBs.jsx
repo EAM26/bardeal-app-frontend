@@ -2,7 +2,7 @@ import React from 'react';
 import './RowRadioButtons.css';
 import './InnerRowRBs.css'
 
-function InnerRowRBs({ type, name, selected, onChange, options, split, splitValue, className }) {
+function InnerRowRBs({ type, name, selected, onChange, options = [], split, splitValue, className }) {
     const isCheckbox = type === 'checkbox';
 
     const isChecked = (option) => {

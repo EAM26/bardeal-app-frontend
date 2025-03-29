@@ -38,8 +38,10 @@ function AlarmIntakeForm() {
         response: '',
         customization: '',
         partialProtection: '',
-        maintenance: false ,
+        maintenance: false,
         customMaintenance: '',
+        proposal: '',
+        customProposal: '',
 
     });
 
@@ -58,8 +60,8 @@ function AlarmIntakeForm() {
                 updated.customRequestingParty = '';
             }
 
-            if (name === 'maintenance' && value !== 'Contract voor onderhoud') {
-                updated.maintenanceFrequency = '';
+            if (name === 'proposal' && value !== 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:') {
+                updated.customProposal = '';
             }
 
             return updated;
@@ -422,13 +424,36 @@ function AlarmIntakeForm() {
                                 name="maintenanceFrequency"
                                 value={formData.maintenanceFrequency}
                                 onChange={handleChange}
-                                placeholder="keer per jaar"
-                                style={{ marginLeft: '1em', width: '100px' }}
+                                // placeholder="keer per jaar"
+                                style={{marginLeft: '1em', width: '100px'}}
+
+                            />
+                        )}
+                        <span>   keer per jaar</span>
+                    </FormRow>
+
+                    <FormRow
+                    showLabel={false}>
+                        <InnerRowRBs
+                            type="radio"
+                            name="proposal"
+                            onChange={handleChange}
+                            selected={formData.proposal || ''}
+                            options={['Totale combinatie beveiligingsmaatregelen conform de geconstateerde ' +
+                            'risicoklasse VRKI 2.0',
+                                'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:']}/>
+                        {formData.proposal === 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:' && (
+                            <input
+                                type="text"
+                                name="customProposal"
+                                placeholder="Vul in..."
+                                value={formData.customProposal || ''}
+                                onChange={handleChange}
+                                style={{marginTop: '0.5em', marginLeft: '1em'}}
+                                required
                             />
                         )}
                     </FormRow>
-
-
 
 
                 </div>
