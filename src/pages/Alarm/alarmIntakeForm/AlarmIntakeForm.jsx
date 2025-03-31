@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import FormRow from "../../../components/FormRow.jsx";
 import Button from "../../../components/Button.jsx";
 import InnerRowRBs from "../../../components/InnerRowRBs.jsx";
+import handleIntakeForm from "../../../utils/postForm.js";
 import {
     ORGANIZATION_ADDRESS,
     ORGANIZATION_EMAIL,
@@ -39,9 +40,11 @@ function AlarmIntakeForm() {
         customization: '',
         partialProtection: '',
         maintenance: false,
-        customMaintenance: '',
+        maintenanceFrequency: 0,
         proposal: '',
         customProposal: '',
+        housesValueAttractiveness: [{name: '', value: ''}],
+        companiesValueAttractiveness: [{name: '', value: ''}],
 
     });
 
@@ -68,16 +71,59 @@ function AlarmIntakeForm() {
         });
     };
 
+    const handleHouseAttractivenessChange = (index, key, value) => {
+        setFormData(prev => {
+            const updatedList = [...prev.housesValueAttractiveness];
+            updatedList[index][key] = value;
+            return {...prev, housesValueAttractiveness: updatedList};
+        });
+    };
+
+    const handleCompanyAttractivenessChange = (index, key, value) => {
+        setFormData(prev => {
+            const updatedList = [...prev.companiesValueAttractiveness];
+            updatedList[index][key] = value;
+            return {...prev, companiesValueAttractiveness: updatedList};
+        });
+    };
+
+    const addHouseAttractivenessRow = () => {
+        setFormData(prev => ({
+            ...prev,
+            housesValueAttractiveness: [...prev.housesValueAttractiveness, {name: '', value: ''}],
+        }));
+    };
+    const addCompanyAttractivenessRow = () => {
+        setFormData(prev => ({
+            ...prev,
+            companiesValueAttractiveness: [...prev.companiesValueAttractiveness, {name: '', value: ''}],
+        }));
+    };
+
+    const removeHouseAttractivenessRow = (index) => {
+        setFormData(prev => {
+            const updatedList = prev.housesValueAttractiveness.filter((_, i) => i !== index);
+            return {...prev, housesValueAttractiveness: updatedList};
+        });
+    };
+
+    const removeCompanyAttractivenessRow = (index) => {
+        setFormData(prev => {
+            const updatedList = prev.companiesValueAttractiveness.filter((_, i) => i !== index);
+            return {...prev, companiesValueAttractiveness: updatedList};
+        });
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
-        // const success = await handleIntakeForm(formData);
-        // if (success) {
-        //     console.log("Form created and submitted");
-        // } else {
-        //     console.log("Form submission failed");
-        // }
+        const success = await handleIntakeForm(formData);
+        if (success) {
+            console.log("Form created and submitted");
+        } else {
+            console.log("Form submission failed");
+        }
 
     }
 
@@ -411,7 +457,7 @@ function AlarmIntakeForm() {
                                     setFormData((prev) => ({
                                         ...prev,
                                         maintenance: isChecked,
-                                        maintenanceFrequency: isChecked ? prev.maintenanceFrequency : ''
+                                        maintenanceFrequency: isChecked ? prev.maintenanceFrequency : 0
                                     }));
                                 }}
                             />
@@ -433,7 +479,7 @@ function AlarmIntakeForm() {
                     </FormRow>
 
                     <FormRow
-                    showLabel={false}>
+                        showLabel={false}>
                         <InnerRowRBs
                             type="radio"
                             name="proposal"
@@ -454,7 +500,66 @@ function AlarmIntakeForm() {
                             />
                         )}
                     </FormRow>
-
+                    <span>Attractieve zaken inboedel (woningen)</span>
+                    <span>Waarde in euro's</span>
+                    <FormRow showLabel={false}>
+                        {formData.housesValueAttractiveness.map((item, index) => (
+                            <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
+                                <input
+                                    type="text"
+                                    placeholder="Omschrijving"
+                                    value={item.name}
+                                    onChange={(e) => handleHouseAttractivenessChange(index, 'name', e.target.value)}
+                                    style={{flex: 2}}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="€"
+                                    value={item.value}
+                                    onChange={(e) => handleHouseAttractivenessChange(index, 'value', e.target.value)}
+                                    style={{flex: 1}}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeHouseAttractivenessRow(index)}
+                                    style={{marginLeft: '0.5em'}}
+                                >
+                                    X
+                                </button>
+                            </div>
+                        ))}
+                        <Button type="button" onClick={addHouseAttractivenessRow}>+ Voeg toe</Button>
+                    </FormRow>
+                    <span>Attractieve goederen en inventaris (bedrijven)</span>
+                    <span>Waarde in euro's</span>
+                    <FormRow showLabel={false}>
+                        {formData.companiesValueAttractiveness.map((item, index) => (
+                            <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
+                                <input
+                                    type="text"
+                                    placeholder="Omschrijving"
+                                    value={item.name}
+                                    onChange={(e) => handleCompanyAttractivenessChange(index, 'name', e.target.value)}
+                                    style={{flex: 2}}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="€"
+                                    value={item.value}
+                                    onChange={(e) => handleCompanyAttractivenessChange(index, 'value', e.target.value)}
+                                    style={{flex: 1}}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeCompanyAttractivenessRow(index)}
+                                    style={{marginLeft: '0.5em'}}
+                                >
+                                    X
+                                </button>
+                            </div>
+                        ))}
+                        <Button type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
+                    </FormRow>
 
                 </div>
                 <Button type="submit">Submit</Button>
