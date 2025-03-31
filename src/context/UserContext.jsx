@@ -1,8 +1,7 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const UserContext = createContext(null);
-export const useUser = () => useContext(UserContext);
+const UserContext = createContext(null);
 
 export default function UserContextProvider({ children }) {
     const [user, setUser] = useState(null);
@@ -14,8 +13,11 @@ export default function UserContextProvider({ children }) {
                 const response = await axios.get("http://localhost:8080/me", {
                     withCredentials: true
                 });
-                setUser(response.data); // { id, email, username, role }
-            } catch {
+                setUser(response.data);
+            } catch (error) {
+                if (error.response && error.response.status !== 401) {
+                    console.error("Unexpected error fetching user:", error);
+                }
                 setUser(null);
             } finally {
                 setLoading(false);
@@ -30,3 +32,5 @@ export default function UserContextProvider({ children }) {
         </UserContext.Provider>
     );
 }
+
+export { UserContext };  // context is fine here as a secondary export
