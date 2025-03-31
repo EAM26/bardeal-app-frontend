@@ -1,197 +1,567 @@
-import React, {useRef, useState} from 'react';
-import './AlarmIntakeForm.css';
-import Button from "../../../components/Button.jsx";
-import RowRadioButtons from "../../../components/RowRadioButtons.jsx";
+import React, {useState} from 'react';
 import FormRow from "../../../components/FormRow.jsx";
+import Button from "../../../components/Button.jsx";
 import InnerRowRBs from "../../../components/InnerRowRBs.jsx";
-import  handleIntakeForm from "../../../utils/postForm.js";
+import handleIntakeForm from "../../../utils/postForm.js";
+import {
+    ORGANIZATION_ADDRESS,
+    ORGANIZATION_EMAIL,
+    ORGANIZATION_NAME,
+    ORGANIZATION_PHONE,
+    ORGANIZATIONZIPCODE_PLACE
+} from "../../../companyConfig.js";
 
 function AlarmIntakeForm() {
-    const [formValues, setFormValues] = useState('');
-    const formRef = useRef(null);
+    const [formData, setFormData] = useState({
+        clientname: '',
+        address: '',
+        zipcode_place: '',
+        phone: '',
+        email: '',
+        employee: '',
+        vebQualityMark: false,
+        borgCertification: '',
+        designatedObject: '',
+        customDesignatedObject: '',
+        requestingParty: '',
+        customRequestingParty: '',
+        housesValue: '',
+        companiesValue: '',
+        riskClass: '',
+        organisational: '',
+        construction: '',
+        compartment: '',
+        theftProtection: '',
+        electronic: '',
+        shieldingDetection: '',
+        alarmTransmission: '',
+        verificationTech: '',
+        response: '',
+        customization: '',
+        partialProtection: '',
+        maintenance: false,
+        maintenanceFrequency: 0,
+        proposal: '',
+        customProposal: '',
+        housesValueAttractiveness: [{name: '', value: ''}],
+        companiesValueAttractiveness: [{name: '', value: ''}],
+
+    });
+
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setFormValues((prevValues) => ({
-            ...prevValues,
-            [name]: value,
+
+        setFormData(prev => {
+            const updated = {...prev, [name]: value};
+
+            if (name === 'designatedObject' && value !== 'Anders, namelijk:') {
+                updated.customDesignatedObject = '';
+            }
+
+            if (name === 'requestingParty' && value !== 'Anders, namelijk:') {
+                updated.customRequestingParty = '';
+            }
+
+            if (name === 'proposal' && value !== 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:') {
+                updated.customProposal = '';
+            }
+
+            return updated;
+        });
+    };
+
+    const handleHouseAttractivenessChange = (index, key, value) => {
+        setFormData(prev => {
+            const updatedList = [...prev.housesValueAttractiveness];
+            updatedList[index][key] = value;
+            return {...prev, housesValueAttractiveness: updatedList};
+        });
+    };
+
+    const handleCompanyAttractivenessChange = (index, key, value) => {
+        setFormData(prev => {
+            const updatedList = [...prev.companiesValueAttractiveness];
+            updatedList[index][key] = value;
+            return {...prev, companiesValueAttractiveness: updatedList};
+        });
+    };
+
+    const addHouseAttractivenessRow = () => {
+        setFormData(prev => ({
+            ...prev,
+            housesValueAttractiveness: [...prev.housesValueAttractiveness, {name: '', value: ''}],
         }));
+    };
+    const addCompanyAttractivenessRow = () => {
+        setFormData(prev => ({
+            ...prev,
+            companiesValueAttractiveness: [...prev.companiesValueAttractiveness, {name: '', value: ''}],
+        }));
+    };
+
+    const removeHouseAttractivenessRow = (index) => {
+        setFormData(prev => {
+            const updatedList = prev.housesValueAttractiveness.filter((_, i) => i !== index);
+            return {...prev, housesValueAttractiveness: updatedList};
+        });
+    };
+
+    const removeCompanyAttractivenessRow = (index) => {
+        setFormData(prev => {
+            const updatedList = prev.companiesValueAttractiveness.filter((_, i) => i !== index);
+            return {...prev, companiesValueAttractiveness: updatedList};
+        });
     };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // const formData = new FormData(formRef.current);
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key}: ${value}`);
-            const success = await handleIntakeForm(formRef);
-            if (success) {
-                console.log("Form created and submitted");
-            } else {
-                console.log("Form submission failed");
-            // }
+        console.log(formData);
+        const success = await handleIntakeForm(formData);
+        if (success) {
+            console.log("Form created and submitted");
+        } else {
+            console.log("Form submission failed");
         }
+
     }
 
-
     return (
-        <div className="outer-container">
-            <form ref={formRef} className="my_form" method="post" onSubmit={handleSubmit}>
+        <div>
+            <form onSubmit={handleSubmit}>
                 <div id="pdf-content">
-                    <div className="data-risk-object">
-                        <h2>Gegevens-risico-object</h2>
-                        <div className="ro-items">
-                            <div className="ro-item"><label htmlFor="rel-nr-ro">Relatienummer</label>
-                                <input id="rel-nr-ro" type="text"/></div>
-                            <div className="ro-item"><label htmlFor="name-ro">Naam</label>
-                                <input id="name-ro" type="text"/></div>
-                            <div className="ro-item"><label htmlFor="address-ro">Adres</label>
-                                <input id="address-ro" type="text"/></div>
-                            <div className="ro-item"><label htmlFor="pstl-place-ro">Postcode/Plaats</label>
-                                <input id="pstl-place-ro" type="text"/></div>
-                            <div className="ro-item"><label htmlFor="phone-ro">Telefoonnummer</label>
-                                <input id="phone-ro" type="text"/></div>
-                            <div className="ro-item"><label htmlFor="email-ro">Email</label>
-                                <input id="email-ro" type="email"/></div>
-                        </div>
-                    </div>
-                    <div>
-                        <FormRow
-                            showLabel={true}
-                            name="Organisatorisch"
-                            className="blue"
-                        >
-                            <InnerRowRBs
-                                type="radio"
-                                split={false}
-                                selected={formValues["Organisatorisch"] || ''}
-                                handleChange={handleChange}
-                                options={['O1', 'O2']}
-                            />
-                        </FormRow>
-                        <FormRow
+                    <FormRow
                         showLabel={true}
-                        name="Bedrijven">
+                        rowName="Naam"
+                    >
+                        <input
+                            type="text"
+                            name="clientname"
+                            value={formData.clientname}
+                            onChange={handleChange}
+                        />
+                    </FormRow>
+                    <FormRow
+                        showLabel={true}
+                        rowName="Adres"
+                    >
+                        <input
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                        />
+                    </FormRow><FormRow
+                    showLabel={true}
+                    rowName="Postcode/Plaats"
+                >
+                    <input
+                        type="text"
+                        name="zipcode_place"
+                        value={formData.zipcode_place}
+                        onChange={handleChange}
+                    />
+                </FormRow><FormRow
+                    showLabel={true}
+                    rowName="TelefoonNummer"
+                >
+                    <input
+                        type="text"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                    />
+                </FormRow>
+                    <FormRow
+                        showLabel={true}
+                        rowName="E-mailadres"
+                    >
+                        <input
+                            type="text"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                    </FormRow>
+                    <FormRow
+                        showLabel={true}
+                        rowName="Beveiligingsbedrijf"
+                    >
+                        <p>{ORGANIZATION_NAME}</p>
+                    </FormRow>
+                    <FormRow
+                        showLabel={true}
+                        rowName="Adres"
+                    >
+                        <p>{ORGANIZATION_ADDRESS}</p>
+                    </FormRow>
+                    <FormRow
+                        showLabel={true}
+                        rowName="Postcode/Plaats"
+                    >
+                        <p>{ORGANIZATIONZIPCODE_PLACE}</p>
+                    </FormRow>
+                    <FormRow
+                        showLabel={true}
+                        rowName="TelefoonNummer"
+                    >
+                        <p>{ORGANIZATION_PHONE}</p>
+                    </FormRow>
+                    <FormRow
+                        showLabel={true}
+                        rowName="E-mailadres"
+                    >
+                        <p>{ORGANIZATION_EMAIL}</p>
+                    </FormRow>
+                    <FormRow showLabel={true} rowName="Intakedocument opgesteld door: ">
+                        <span>Bevoegd persoon Naam:</span>
+                        <input
+                            type="text"
+                            name="employee"
+                            value={formData.employee}
+                            onChange={handleChange}
+                        />
+                    </FormRow>
+                    <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
+                        <div className="double-split"><label>
+                            <input
+                                type="checkbox"
+                                name="vebQualityMark"
+                                checked={formData.vebQualityMark || false}
+                                onChange={(e) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        [e.target.name]: e.target.checked,
+                                    }))
+                                }
+                            />
+                            VEB kwaliteitsregeling
+                        </label>
                             <InnerRowRBs
                                 type="radio"
-                                split={false}
-                                selected={formValues["Bedrijven"] || ''}
-                                handleChange={handleChange}
-                                options={['Laag', 'Midden', 'Hoog', 'Zeer Hoog']}
+                                name="borgCertification"
+                                splitValue={1}
+                                selected={formData.borgCertification || ''}
+                                onChange={(e) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        [e.target.name]: e.target.value,
+                                    }))
+                                }
+                                options={['CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
+                                split={true}
+                            /></div>
+
+                    </FormRow>
+                    <FormRow showLabel={false}>
+                        <InnerRowRBs
+                            type="radio"
+                            name="designatedObject"
+                            onChange={handleChange}
+                            selected={formData.designatedObject || ''}
+                            options={['Woning', 'Bedrijf', 'Winkel/showroom', 'Magazijn/opslag',
+                                'Onderwijsinstelling', '(Semi) overheidsinstelling',
+                                'Anders, namelijk:']}/>
+                        {formData.designatedObject === 'Anders, namelijk:' && (
+                            <input
+                                type="text"
+                                name="customDesignatedObject"
+                                placeholder="Vul in..."
+                                value={formData.customDesignatedObject || ''}
+                                onChange={handleChange}
+                                style={{marginTop: '0.5em', marginLeft: '1em'}}
+                                required
                             />
-                        </FormRow>
-                    </div>
-                    <div>
-                        <h5>Geconstateerde risicoklasse conform VRKI 2.0</h5>
-                        <RowRadioButtons
-                            showLabel={false}
-                            className="risk-class"
+                        )}
+                    </FormRow>
+                    <FormRow showLabel={false}>
+                        <InnerRowRBs
                             type="radio"
-                            name="Risico klasse"
-                            selected={formValues["Risico klasse"] || ''}
-                            handleChange={handleChange}
-                            options={['Klasse 1', 'Klasse 2', 'Klasse 3', 'Klasse 4']}/>
-                    </div>
-                    <div>
-                        <h5>Geadviseerde combinatie van maatregelen conform geconstateerde risicoklasse VRKI 2.0 </h5>
-                        <RowRadioButtons
+                            name="requestingParty"
+                            onChange={handleChange}
+                            selected={formData.requestingParty || ''}
+                            options={['Bewoner/ eigenaar/ beheerder', 'Verzekeraar',
+                                'Anders, namelijk:']}/>
+                        {formData.requestingParty === 'Anders, namelijk:' && (
+                            <input
+                                type="text"
+                                name="customRequestingParty"
+                                placeholder="Vul in..."
+                                value={formData.customRequestingParty || ''}
+                                onChange={handleChange}
+                                style={{marginTop: '0.5em', marginLeft: '1em'}}
+                                required
+                            />
+                        )}
+                    </FormRow>
+                    <FormRow showLabel={false} rowName="Woningen">
+                        <span>Waarde attractieve zaken €:</span>
+                        <input
+                            type="number"
+                            name="housesValue"
+                            value={formData.housesValue}
+                            onChange={handleChange}
+                        />
+                    </FormRow>
+                    <FormRow showLabel={true} rowName="Bedrijven">
+                        <InnerRowRBs
+                            type="radio"
+                            name="companiesValue"
+                            onChange={handleChange}
+                            selected={formData.companiesValue || ''}
+                            options={['Laag €', 'Midden €', 'Hoog €', 'Zeer Hoog €']}
                             split={true}
-                            className="measure-items"
+                            splitValue={2}
+                        />
+                    </FormRow>
+                    <FormRow showLabel={false}>
+                        <InnerRowRBs
                             type="radio"
-                            name="Organisatorisch"
-                            selected={formValues["Organisatorisch"] || ''}
-                            handleChange={handleChange}
-                            options={['O1', 'O2']}/>
-                        <RowRadioButtons
-                            className="measure-items"
+                            name="riskClass"
+                            selected={formData.riskClass || ''}
+                            onChange={handleChange}
+                            options={['Klasse 1', 'Klasse 2', 'Klasse 3', 'Klasse 4']}
+                            split={false}
+
+                        />
+                    </FormRow>
+                    <FormRow showLabel={true} rowName="Organisatorisch">
+                        <InnerRowRBs
                             type="radio"
-                            name="Bouwkundig"
-                            selected={formValues["Compartiment"] || ''}
-                            handleChange={handleChange}
-                            options={['BK1', 'BK2', 'BK3', 'BK4']}/>
-                        <RowRadioButtons
-                            className="measure-items"
+                            name="organisational"
+                            onChange={handleChange}
+                            selected={formData.organisational || ''}
+                            options={['01', '02']}
+                            split={false}
+                        />
+
+
+                    </FormRow>
+                    <FormRow showLabel={true} rowName="Bouwkundig">
+                        <InnerRowRBs
                             type="radio"
-                            name="Compartiment"
-                            selected={formValues["Compartiment"] || ''}
-                            handleChange={handleChange}
+                            name="construction"
+                            selected={formData.construction || ''}
+                            onChange={handleChange}
+                            options={['BK1', 'BK2', 'BK3', 'BK4']}
+                            split={false}
+                        />
+                    </FormRow>
+                    <FormRow showLabel={true} rowName="Compartiment">
+                        <InnerRowRBs
+                            type="radio"
+                            name="compartment"
+                            selected={formData.compartment || ''}
+                            onChange={handleChange}
                             options={['CO1', 'CO2', 'CO3', 'CO4']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Meeneem beperkend">
+                        <InnerRowRBs
                             type="radio"
-                            name="Meeneem beperkend"
-                            selected={formValues["Meeneem beperkend"] || ''}
-                            handleChange={handleChange}
+                            name="theftProtection"
+                            selected={formData.theftProtection || ''}
+                            onChange={handleChange}
                             options={['ME1', 'ME2', 'ME3', 'ME4']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Elektronisch">
+                        <InnerRowRBs
                             type="radio"
-                            name="Elektronisch"
-                            selected={formValues["Elektronisch"] || ''}
-                            handleChange={handleChange}
+                            name="electronic"
+                            selected={formData.electronic || ''}
+                            onChange={handleChange}
                             options={['EL1', 'EL2', 'EL3', 'EL4']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Schildetectie">
+                        <InnerRowRBs
                             type="radio"
-                            name="Schildetectie"
-                            selected={formValues["Schildetectie"] || ''}
-                            handleChange={handleChange}
+                            name="shieldingDetection"
+                            selected={formData.shieldingDetection || ''}
+                            onChange={handleChange}
                             options={['SD1', 'SD2', 'SD3', 'SD4']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Alarmtransmissie">
+                        <InnerRowRBs
                             type="radio"
-                            name="Alarmtransmissie"
-                            selected={formValues["Alarmtransmissie"] || ''}
-                            handleChange={handleChange}
+                            name="alarmTransmission"
+                            selected={formData.alarmTransmission || ''}
+                            onChange={handleChange}
                             options={['AT1', 'AT2', 'AT3', 'AT4']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Tech. Alarmverificatie">
+                        <InnerRowRBs
                             type="radio"
-                            name="Tech. Alarmverificatie"
-                            selected={formValues["Tech. Alarmverificatie"] || ''}
-                            handleChange={handleChange}
+                            name="verificationTech"
+                            selected={formData.verificationTech || ''}
+                            onChange={handleChange}
                             options={['Video', 'Audio', 'Meerdere zones']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Reactie">
+                        <InnerRowRBs
                             type="radio"
-                            name="Reactie"
-                            selected={formValues["Reactie"] || ''}
-                            handleChange={handleChange}
+                            name="response"
+                            selected={formData.response || ''}
+                            onChange={handleChange}
                             options={['RE1', 'RE2', 'RE3', 'RE4']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Maatwerk">
+                        <InnerRowRBs
                             type="radio"
-                            name="Maatwerk"
-                            selected={formValues["Maatwerk"] || ''}
-                            handleChange={handleChange}
+                            name="customization"
+                            selected={formData.customization || ''}
+                            onChange={handleChange}
                             options={['N.V.T.', 'Ja, toelichting in beveiligingsplan']}
+                            split={false}
                         />
+                    </FormRow>
 
-                        <RowRadioButtons
-                            className="measure-items"
+                    <FormRow showLabel={true} rowName="Partiële beveiliging">
+                        <InnerRowRBs
                             type="radio"
-                            name="Partiële beveiliging"
-                            selected={formValues["Partiële beveiliging"] || ''}
-                            handleChange={handleChange}
+                            name="partialProtection"
+                            selected={formData.partialProtection || ''}
+                            onChange={handleChange}
                             options={['Nee', 'Ja, toelichting in beveiligingsplan']}
-                        /></div>
+                            split={false}
+                        />
+                    </FormRow>
+                    <FormRow showLabel={true} rowName="Onderhoud">
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="maintenance"
+                                checked={formData.maintenance}
+                                onChange={(e) => {
+                                    const isChecked = e.target.checked;
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        maintenance: isChecked,
+                                        maintenanceFrequency: isChecked ? prev.maintenanceFrequency : 0
+                                    }));
+                                }}
+                            />
+                            Contract voor onderhoud
+                        </label>
+
+                        {formData.maintenance && (
+                            <input
+                                type="number"
+                                name="maintenanceFrequency"
+                                value={formData.maintenanceFrequency}
+                                onChange={handleChange}
+                                // placeholder="keer per jaar"
+                                style={{marginLeft: '1em', width: '100px'}}
+
+                            />
+                        )}
+                        <span>   keer per jaar</span>
+                    </FormRow>
+
+                    <FormRow
+                        showLabel={false}>
+                        <InnerRowRBs
+                            type="radio"
+                            name="proposal"
+                            onChange={handleChange}
+                            selected={formData.proposal || ''}
+                            options={['Totale combinatie beveiligingsmaatregelen conform de geconstateerde ' +
+                            'risicoklasse VRKI 2.0',
+                                'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:']}/>
+                        {formData.proposal === 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:' && (
+                            <input
+                                type="text"
+                                name="customProposal"
+                                placeholder="Vul in..."
+                                value={formData.customProposal || ''}
+                                onChange={handleChange}
+                                style={{marginTop: '0.5em', marginLeft: '1em'}}
+                                required
+                            />
+                        )}
+                    </FormRow>
+                    <span>Attractieve zaken inboedel (woningen)</span>
+                    <span>Waarde in euro's</span>
+                    <FormRow showLabel={false}>
+                        {formData.housesValueAttractiveness.map((item, index) => (
+                            <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
+                                <input
+                                    type="text"
+                                    placeholder="Omschrijving"
+                                    value={item.name}
+                                    onChange={(e) => handleHouseAttractivenessChange(index, 'name', e.target.value)}
+                                    style={{flex: 2}}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="€"
+                                    value={item.value}
+                                    onChange={(e) => handleHouseAttractivenessChange(index, 'value', e.target.value)}
+                                    style={{flex: 1}}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeHouseAttractivenessRow(index)}
+                                    style={{marginLeft: '0.5em'}}
+                                >
+                                    X
+                                </button>
+                            </div>
+                        ))}
+                        <Button type="button" onClick={addHouseAttractivenessRow}>+ Voeg toe</Button>
+                    </FormRow>
+                    <span>Attractieve goederen en inventaris (bedrijven)</span>
+                    <span>Waarde in euro's</span>
+                    <FormRow showLabel={false}>
+                        {formData.companiesValueAttractiveness.map((item, index) => (
+                            <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
+                                <input
+                                    type="text"
+                                    placeholder="Omschrijving"
+                                    value={item.name}
+                                    onChange={(e) => handleCompanyAttractivenessChange(index, 'name', e.target.value)}
+                                    style={{flex: 2}}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="€"
+                                    value={item.value}
+                                    onChange={(e) => handleCompanyAttractivenessChange(index, 'value', e.target.value)}
+                                    style={{flex: 1}}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeCompanyAttractivenessRow(index)}
+                                    style={{marginLeft: '0.5em'}}
+                                >
+                                    X
+                                </button>
+                            </div>
+                        ))}
+                        <Button type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
+                    </FormRow>
+
                 </div>
-
-
                 <Button type="submit">Submit</Button>
             </form>
         </div>

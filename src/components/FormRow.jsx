@@ -1,12 +1,12 @@
 import React from 'react';
 import './RowRadioButtons.css'
 
-function FormRow({showLabel, name, children, className}) {
+function FormRow({showLabel, rowName, children, className}) {
     return (
         <div className="form-row">
             <label
                 className={className}>
-                {showLabel && name}
+                {showLabel && rowName}
             </label>
             <div>
                 {children}
