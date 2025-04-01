@@ -1,19 +1,22 @@
-.outer-container {
-    padding: 100px;
-    /*background-color: green;*/
+.outer_container {
+    padding: 10px
 }
 
-
-.data-risk-object {
-    display: flex;
-    flex-direction: column;
+h2, h3, h4, h5 {
+    color: royalblue;
+    margin: 10px 0;
 }
 
-.ro-items {
-    display: flex;
-    flex-direction: column;
+form {
+    padding: 15px 30px;
+    border: 1px solid #ccc;
 }
 
-.measure-items {
-    display: flex;
+.block {
+    border: 1px solid black;
+    margin: 10px 0;
+}
+
+.block_no_header {
+    margin: 10px 0;
 }
