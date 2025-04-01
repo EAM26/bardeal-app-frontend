@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import FormRow from "../../../components/FormRow.jsx";
-import Button from "../../../components/Button.jsx";
-import InnerRowRBs from "../../../components/InnerRowRBs.jsx";
+import FormRow from "../../../components/formrow/FormRow.jsx";
+import Button from "../../../components/button/Button.jsx";
+import InnerRowRBs from "../../../components/innerRowRBs/InnerRowRBs.jsx";
 import './AlarmIntakeForm.css'
+import handleIntakeForm from "../../../utils/postForm.js";
 import {
     ORGANIZATION_ADDRESS,
     ORGANIZATION_EMAIL,
@@ -120,20 +121,21 @@ function AlarmIntakeForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const form = e.target;
         console.log(formData);
-        // const success = await handleIntakeForm(formData);
-        // if (success) {
-        //     console.log("Form created and submitted");
-        // } else {
-        //     console.log("Form submission failed");
-        // }
+        const success = await handleIntakeForm(formData, form);
+        if (success) {
+            console.log("Form created and submitted");
+        } else {
+            console.log("Form submission failed");
+        }
 
     }
 
     return (
         <div className="outer_container">
             <form onSubmit={handleSubmit}>
-                <div id="pdf-content">
+                <div>
                     <h2>VRKI Intakedocument</h2>
                     <h5>Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
                         wensen van de aanvrager</h5>
@@ -571,6 +573,7 @@ function AlarmIntakeForm() {
                                     style={{flex: 1}}
                                 />
                                 <button
+                                    className="print-hidden"
                                     type="button"
                                     onClick={() => removeHouseAttractivenessRow(index)}
                                     style={{marginLeft: '0.5em'}}
@@ -581,7 +584,10 @@ function AlarmIntakeForm() {
                         ))}
                     </FormRow>
                     </div>
-                    <Button type="button" onClick={addHouseAttractivenessRow}>+ Voeg toe</Button>
+                    <Button
+                        type="button"
+                        onClick={addHouseAttractivenessRow}>+ Voeg toe
+                    </Button>
                     <div className="block">
                         <span>Attractieve goederen en inventaris (bedrijven)</span>
                         <span>Waarde in euro's</span>
@@ -603,6 +609,7 @@ function AlarmIntakeForm() {
                                     style={{flex: 1}}
                                 />
                                 <button
+                                    className="print-hidden"
                                     type="button"
                                     onClick={() => removeCompanyAttractivenessRow(index)}
                                     style={{marginLeft: '0.5em'}}
@@ -613,10 +620,10 @@ function AlarmIntakeForm() {
                         ))}
                     </FormRow>
                     </div>
-                    <Button type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
+                    <Button  type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
 
                 </div>
-                <Button type="submit">Submit</Button>
+                <Button classname="submit" type="submit">Submit</Button>
             </form>
         </div>
     );

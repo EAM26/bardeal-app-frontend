@@ -5,18 +5,27 @@
 h2, h3, h4, h5 {
     color: royalblue;
     margin: 10px 0;
+    text-align: center;
+
 }
 
 form {
+    max-width: 900px;
     padding: 15px 30px;
     border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 5px;
 }
 
 .block {
     border: 1px solid black;
-    margin: 10px 0;
+    margin: 20px 0;
 }
 
 .block_no_header {
     margin: 10px 0;
+}
+
+input {
+    padding: 3px;
 }

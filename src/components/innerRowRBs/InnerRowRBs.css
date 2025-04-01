@@ -1,0 +1,32 @@
+.double-split {
+    display: flex;
+}
+
+.not_split, .split {
+    display: flex;
+    flex-wrap: wrap;  /* Allow items to wrap */
+    gap: 10px; /* Space between each option group */
+}
+
+label {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 8px; /* Space inside the label */
+    /*border: 1px solid #ccc; !* Outline around each option *!*/
+    /*border-radius: 4px; !* Rounded corners *!*/
+    /*margin: 3px; !* Space around each label *!*/
+    /*background-color: #f0f0f0; !* Subtle background color *!*/
+    /*transition: background-color 0.2s ease; !* Smooth transition *!*/
+}
+
+label:hover {
+    /*background-color: #e0e0e0; !* Slight change on hover *!*/
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 6px; /* Space between the button and the label text */
+}
+
+.split div, .not_split {
+    margin-bottom: 5px; /* Space between rows when wrapped */
+}
