@@ -126,6 +126,7 @@ function AlarmIntakeForm() {
         const success = await handleIntakeForm(formData, form);
         if (success) {
             console.log("Form created and submitted");
+            window.location.reload();
         } else {
             console.log("Form submission failed");
         }
@@ -139,9 +140,11 @@ function AlarmIntakeForm() {
                     <h2>VRKI Intakedocument</h2>
                     <h5>Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
                         wensen van de aanvrager</h5>
-                    <div><label htmlFor="version">
+                    <div className="top-row-input">
+                        <label htmlFor="version">
                         VRKI 2.0 versie:
                         <input
+                            // className="top-row-input"
                             id="version"
                             name="version"
                             type="text"
@@ -162,6 +165,7 @@ function AlarmIntakeForm() {
                         <label htmlFor="projectNumber">
                             Projectnummer:
                             <input
+                                // className="top-row-input"
                                 id="projectNumber"
                                 name="projectNumber"
                                 type="text"
@@ -321,7 +325,7 @@ function AlarmIntakeForm() {
                         </FormRow>
                     </div>
                     <h3>Eisende partij</h3>
-                    <div className="block">
+                    <div className="block no-break">
                         <FormRow showLabel={false}>
                             <InnerRowRBs
                                 type="radio"
@@ -551,38 +555,40 @@ function AlarmIntakeForm() {
                                 required
                             />
                         )}
-                    </FormRow></div>
-                    <h3>Inventarisatie naar attractiviteit en waarde</h3>
-                    <div className="block"><span>Attractieve zaken inboedel (woningen)</span>
-                        <span>Waarde in euro's</span>
-                    <FormRow showLabel={false}>
-                        {formData.housesValueAttractiveness.map((item, index) => (
-                            <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
-                                <input
-                                    type="text"
-                                    placeholder="Omschrijving"
-                                    value={item.name}
-                                    onChange={(e) => handleHouseAttractivenessChange(index, 'name', e.target.value)}
-                                    style={{flex: 2}}
-                                />
-                                <input
-                                    type="number"
-                                    placeholder="€"
-                                    value={item.value}
-                                    onChange={(e) => handleHouseAttractivenessChange(index, 'value', e.target.value)}
-                                    style={{flex: 1}}
-                                />
-                                <button
-                                    className="print-hidden"
-                                    type="button"
-                                    onClick={() => removeHouseAttractivenessRow(index)}
-                                    style={{marginLeft: '0.5em'}}
-                                >
-                                    X
-                                </button>
-                            </div>
-                        ))}
                     </FormRow>
+                    </div>
+                    <div className="block no-break"><h3>Inventarisatie naar attractiviteit en waarde</h3>
+                        <div className="block"><span>Attractieve zaken inboedel (woningen)</span>
+                            <span>Waarde in euro's</span>
+                            <FormRow showLabel={false}>
+                                {formData.housesValueAttractiveness.map((item, index) => (
+                                    <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
+                                        <input
+                                            type="text"
+                                            placeholder="Omschrijving"
+                                            value={item.name}
+                                            onChange={(e) => handleHouseAttractivenessChange(index, 'name', e.target.value)}
+                                            style={{flex: 2}}
+                                        />
+                                        <input
+                                            type="number"
+                                            placeholder="€"
+                                            value={item.value}
+                                            onChange={(e) => handleHouseAttractivenessChange(index, 'value', e.target.value)}
+                                            style={{flex: 1}}
+                                        />
+                                        <button
+                                            className="print-hidden"
+                                            type="button"
+                                            onClick={() => removeHouseAttractivenessRow(index)}
+                                            style={{marginLeft: '0.5em'}}
+                                        >
+                                            X
+                                        </button>
+                                    </div>
+                                ))}
+                            </FormRow>
+                        </div>
                     </div>
                     <Button
                         type="button"

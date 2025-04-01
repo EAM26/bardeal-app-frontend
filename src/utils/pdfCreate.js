@@ -14,7 +14,7 @@ export async function handlePDF(form) {
             filename: 'intakeformulier.pdf',
             html2canvas: {scale: 2},
             jsPDF: {unit: 'mm', format: 'a4'},
-
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
 
         };
 
