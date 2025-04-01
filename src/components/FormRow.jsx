@@ -1,17 +1,17 @@
 import React from 'react';
-import './RowRadioButtons.css'
+import './FormRow.css';
 
-function FormRow({showLabel, rowName, children, className}) {
+function FormRow({ showLabel, rowName, children, className }) {
     return (
         <div className="form-row">
-            <label
-                className={className}>
-                {showLabel && rowName}
-            </label>
-            <div>
+            {showLabel && (
+                <label className={`${className} form-row-label`}>
+                    {rowName}
+                </label>
+            )}
+            <div className={showLabel ? 'form-row-content' : 'form-row-full'}>
                 {children}
             </div>
-
         </div>
     );
 }
