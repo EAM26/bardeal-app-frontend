@@ -24,7 +24,8 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/" element={user ? <Home/> : <Navigate to="/login"/>}/>
-                    <Route path="/alarm" element={user ? <AlarmIntakeForm/> : <Navigate to="/login"/>}/>
+                    {/*<Route path="/alarm" element={user ? <AlarmIntakeForm/> : <Navigate to="/login"/>}/>*/}
+                    <Route path="/alarm" element={ <AlarmIntakeForm/>}/>
                     <Route path="/alarms"
                            element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Alarms/> :
                                <Navigate to="/login"/>}/>

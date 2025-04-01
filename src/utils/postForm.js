@@ -1,17 +1,17 @@
 import handlePDF from "./pdfCreate.js";
 import axios from "axios";
 
-export async function handleIntakeForm (formData)  {
+export async function handleIntakeForm (formData, form)  {
 
     try {
 
         const alarmIntake = {
-            companyName: formData.clientname,
+            companyName: formData.clientName,
             timestamp: new Date().toISOString(),
             text: 'Alarm intake via PDF submit'
         };
 
-        const pdfBlob = await handlePDF();
+        const pdfBlob = await handlePDF(form);
         if (!pdfBlob) {
             console.error("PDF error");
             return false;

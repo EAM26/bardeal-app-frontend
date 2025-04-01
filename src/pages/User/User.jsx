@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Button from "../../components/Button.jsx";
+import Button from "../../components/button/Button.jsx";
 import axios from "axios";
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import './NavBar.css';
 import {NavLink} from "react-router-dom";
-import Button from "./Button.jsx";
+import Button from "./button/Button.jsx";
 
 function Navbar() {
 

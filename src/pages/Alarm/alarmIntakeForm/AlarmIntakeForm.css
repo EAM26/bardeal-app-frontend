@@ -1,19 +1,74 @@
-.outer-container {
-    padding: 100px;
-    /*background-color: green;*/
+.outer_container {
+    padding: 10px
 }
 
+h2, h3, h4, h5 {
+    color: royalblue;
+    margin: 10px 0;
+    text-align: center;
 
-.data-risk-object {
+}
+
+form {
+    max-width: 1000px;
+    padding: 15px 30px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.block {
+    border: 1px solid black;
+    margin: 20px 0;
+}
+
+.block_no_header {
+    margin: 10px 0;
+}
+
+input {
+    padding: 3px;
+}
+
+.top-row-input {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    max-width: 100%; /* Ensure it never exceeds the parent */
+    gap: 10px; /* Space between labels */
+}
+
+.top-row-input label {
     display: flex;
     flex-direction: column;
+    max-width: 30%; /* Ensure each label takes up a maximum of 30% of the parent */
+    flex: 1;
+    margin: 5px;
+    white-space: nowrap; /* Prevent text from breaking */
 }
 
-.ro-items {
-    display: flex;
-    flex-direction: column;
+input[type="text"], input[type="date"] {
+    width: 100%; /* Make input take full width of label */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
-.measure-items {
-    display: flex;
+@media print {
+    .page-break {
+        page-break-before: always;
+    }
+
+    .no-break, .block, h3, h2, h5, .form-row, .inner-row, .form-group, label, .block_no_header {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .form-row, .block {
+        display: block;
+    }
+
+    .inner-row, .form-group, .block_no_header {
+        display: inline-block;
+        width: 100%;
+    }
 }
+
