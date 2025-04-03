@@ -1,10 +1,6 @@
-.outer_container {
-    padding: 10px
-}
-
 h2, h3, h4, h5 {
     color: royalblue;
-    margin: 10px 0;
+    margin: 5px 0;
     text-align: center;
 
 }
@@ -15,27 +11,44 @@ form {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
     border-radius: 5px;
-}
-
-.block {
-    border: 1px solid black;
-    margin: 20px 0;
-}
-
-.block_no_header {
-    margin: 10px 0;
+    /*display: flex;*/
+    /*flex-direction: column;*/
 }
 
 input {
     padding: 3px;
 }
 
+
+.outer_container {
+    padding: 10px
+}
+
+.inner_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.block {
+    border: 1px solid black;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.block_no_header {
+    margin: 10px 0;
+}
+
 .top-row-input {
     display: flex;
+
     justify-content: space-between;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    max-width: 100%; /* Ensure it never exceeds the parent */
-    gap: 10px; /* Space between labels */
+    /*align-content: center;*/
+    /*flex-wrap: nowrap; !* Prevent wrapping *!*/
+    width: 60%;
+    /*max-width: 100%; !* Ensure it never exceeds the parent *!*/
+    /*gap: 10px; !* Space between labels *!*/
 }
 
 .top-row-input label {
@@ -52,10 +65,14 @@ input[type="text"], input[type="date"] {
     box-sizing: border-box; /* Include padding in width calculation */
 }
 
+.align-left {
+    align-self: flex-start;
+}
+
 @media print {
-    .page-break {
-        page-break-before: always;
-    }
+    /*.page-break {*/
+    /*    page-break-before: always;*/
+    /*}*/
 
     .no-break, .block, h3, h2, h5, .form-row, .inner-row, .form-group, label, .block_no_header {
         page-break-inside: avoid;
