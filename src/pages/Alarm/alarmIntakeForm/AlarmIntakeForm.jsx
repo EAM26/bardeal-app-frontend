@@ -3,6 +3,7 @@ import FormRow from "../../../components/formrow/FormRow.jsx";
 import Button from "../../../components/button/Button.jsx";
 import InnerRowRBs from "../../../components/innerRowRBs/InnerRowRBs.jsx";
 import './AlarmIntakeForm.css'
+import '../../../components/button/Button.css'
 import handleIntakeForm from "../../../utils/postForm.js";
 import {
     ORGANIZATION_ADDRESS,
@@ -592,7 +593,7 @@ function AlarmIntakeForm() {
                         </div>
                     </div>
                     <Button
-                        classname="align-left"
+                        classname="align-left logout"
                         type="button"
                         onClick={addHouseAttractivenessRow}>+ Voeg toe
                     </Button>
