@@ -6,6 +6,7 @@ h2, h3, h4, h5 {
 }
 
 form {
+    margin: auto;
     max-width: 1000px;
     padding: 15px 30px;
     border: 1px solid #ccc;
@@ -21,7 +22,9 @@ input {
 
 
 .outer_container {
-    padding: 10px
+    padding: 10px;
+    /*background-color: orange;*/
+
 }
 
 .inner_container {

@@ -19,7 +19,7 @@ function User() {
     async function handleSubmit(e) {
         e.preventDefault();
         console.log(formData);
-        const response = await axios.post('http://localhost:8080/user', formData, {
+        const response = await axios.post('http://localhost:8080/users', formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'

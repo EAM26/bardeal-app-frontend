@@ -8,7 +8,7 @@ function Home() {
         <div>
             <h1>Homepage</h1>
             {user ? (
-                <p>Welcome, {user.name}!</p>
+                <p>Welcome, {user.username}!</p>
             ) : (
                 <div>
                     <p>You are not logged in.</p>
