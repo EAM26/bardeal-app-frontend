@@ -1,7 +1,7 @@
 import React from 'react';
 import './NavBar.css';
 import {NavLink} from "react-router-dom";
-import Button from "./button/Button.jsx";
+import Button from "../button/Button.jsx";
 
 function Navbar() {
 
@@ -15,7 +15,7 @@ function Navbar() {
             <NavLink to="/alarms"><h2>Alarms</h2></NavLink>
             <NavLink to="/user"><h2>New User</h2></NavLink>
             <NavLink to="/users"><h2>Users</h2></NavLink>
-            <Button onClick={handleLogout}>Logout</Button>
+            <Button onClick={handleLogout} classname="logout">Logout</Button>
         </div>
     );
 }

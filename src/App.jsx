@@ -7,7 +7,7 @@ import Users from "./pages/User/Users.jsx";
 import Alarms from "./pages/Alarm/alarmIntakeForm/Alarms.jsx";
 import UserContextProvider from "./context/UserContext.jsx";
 
-import Navbar from "./components/Navbar.jsx";
+import Navbar from "./components/navbar/Navbar.jsx";
 
 import Login from "./pages/Login.jsx";
 import {useUser} from "./context/useUser.js";

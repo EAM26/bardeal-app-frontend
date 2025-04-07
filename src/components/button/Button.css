@@ -2,6 +2,14 @@ button {
     cursor: pointer;
 }
 
+.logout {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
 .hide-for-pdf {
     display: none !important;
 }

@@ -3,6 +3,7 @@ import FormRow from "../../../components/formrow/FormRow.jsx";
 import Button from "../../../components/button/Button.jsx";
 import InnerRowRBs from "../../../components/innerRowRBs/InnerRowRBs.jsx";
 import './AlarmIntakeForm.css'
+import '../../../components/button/Button.css'
 import handleIntakeForm from "../../../utils/postForm.js";
 import {
     ORGANIZATION_ADDRESS,
@@ -136,7 +137,7 @@ function AlarmIntakeForm() {
     return (
         <div className="outer_container">
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="inner_container">
                     <h2>VRKI Intakedocument</h2>
                     <h5>Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
                         wensen van de aanvrager</h5>
@@ -260,12 +261,13 @@ function AlarmIntakeForm() {
                             <p>{ORGANIZATION_EMAIL}</p>
                         </FormRow>
                         <FormRow showLabel={true} rowName="Intakedocument opgesteld door: ">
-                            <span>Bevoegd persoon Naam:</span>
+                            {/*<span>Bevoegd persoon Naam:</span>*/}
                             <input
                                 type="text"
                                 name="employee"
                                 value={formData.employee}
                                 onChange={handleChange}
+                                placeholder="Bevoegd persoon Naam"
                             />
                         </FormRow>
                         <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
@@ -349,7 +351,7 @@ function AlarmIntakeForm() {
                     </div>
                     <div className="block block_no_header">
                         <FormRow showLabel={true} rowName="Woningen">
-                            <span>Waarde attractieve zaken €:</span>
+                            <span>Waarde attractieve zaken €:  </span>
                             <input
                                 type="number"
                                 name="housesValue"
@@ -591,6 +593,7 @@ function AlarmIntakeForm() {
                         </div>
                     </div>
                     <Button
+                        classname="align-left logout"
                         type="button"
                         onClick={addHouseAttractivenessRow}>+ Voeg toe
                     </Button>
@@ -626,7 +629,7 @@ function AlarmIntakeForm() {
                         ))}
                     </FormRow>
                     </div>
-                    <Button  type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
+                    <Button classname="align-left" type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
 
                 </div>
                 <Button classname="submit" type="submit">Submit</Button>

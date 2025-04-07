@@ -1,11 +1,11 @@
 import React from 'react';
 import './Button.css';
 
-function Button({type, children, onClick}) {
+function Button({type, children, onClick, classname}) {
     return (
         <button
             type={type}
-            className="pdf-hidden"
+            className={`pdf-hidden ${classname || ''}`.trim()}
             onClick={onClick}
         >
             {children}
