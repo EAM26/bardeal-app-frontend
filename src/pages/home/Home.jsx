@@ -1,12 +1,14 @@
 import React from 'react';
+import './Home.css'
 import { useUser } from "../../context/useUser.js";
 
 function Home() {
     const { user } = useUser();
 
     return (
-        <div>
+        <div className="outer-container">
             <h1>Homepage</h1>
+
             {user ? (
                 <p>Welcome, {user.username}!</p>
             ) : (
@@ -15,8 +17,11 @@ function Home() {
                     <button onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google"}>
                         Login with Google
                     </button>
+
                 </div>
+
             )}
+            <img src="/images/under_construction.png" alt="under construction"/>
         </div>
     );
 }
