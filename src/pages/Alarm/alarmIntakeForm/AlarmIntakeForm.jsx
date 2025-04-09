@@ -130,6 +130,8 @@ function AlarmIntakeForm() {
             window.location.reload();
         } else {
             console.log("Form submission failed");
+            const buttons = document.querySelectorAll('.to-hide');
+            buttons.forEach(btn => btn.classList.remove('hide-for-pdf'));
         }
         console.log("*********************");
         console.log(JSON.stringify(formData).length); // bytes
@@ -600,7 +602,7 @@ function AlarmIntakeForm() {
                         </div>
 
                     <Button
-                        classname="align-left add-row"
+                        classname="align-left add-row to-hide"
                         type="button"
                         onClick={addHouseAttractivenessRow}>+ Voeg toe
                     </Button>
@@ -638,11 +640,11 @@ function AlarmIntakeForm() {
                         ))}
                     </FormRow>
                     </div>
-                    <Button classname="align-left add-row" type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
+                    <Button classname="align-left add-row to-hide" type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
 
                 </div>
                 </div>
-                <Button classname="submit" type="submit">Submit</Button>
+                <Button classname="submit logout to-hide" type="submit">Submit</Button>
             </form>
         </div>
     );
