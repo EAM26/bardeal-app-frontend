@@ -20,7 +20,7 @@ function App() {
     return (
         <>
             <UserContextProvider>
-                <Navbar/>
+                {user && <Navbar/>}
                 <Routes>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/" element={user ? <Home/> : <Navigate to="/login"/>}/>
