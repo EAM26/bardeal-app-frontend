@@ -24,17 +24,23 @@ function Users() {
             <table>
                 <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>Company Id</th>
+                    <th>Company Name</th>
                 </tr>
                 </thead>
                 <tbody>
                 {users.map(user => (
                     <tr key={user.id}>
+                        <td>{user.id}</td>
                         <td>{user.username}</td>
                         <td>{user.email}</td>
                         <td>{user.role}</td>
+                        <td>{user.companyId}</td>
+                        <td>{user.companyName}</td>
                     </tr>
                 ))}
                 </tbody>

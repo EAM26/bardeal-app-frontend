@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 /src/assets/react.svg
 /src/pages/Alarm/alarmIntakeForm/TempAlarmIntakeForm.jsx
+/public/images/under_construction.png

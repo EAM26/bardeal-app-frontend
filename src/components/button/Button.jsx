@@ -5,7 +5,8 @@ function Button({type, children, onClick, classname}) {
     return (
         <button
             type={type}
-            className={`pdf-hidden ${classname || ''}`.trim()}
+            className={classname}
+            // className={`pdf-hidden ${classname || ''}`.trim()}
             onClick={onClick}
         >
             {children}

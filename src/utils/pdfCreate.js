@@ -4,7 +4,7 @@ import html2pdf from "html2pdf.js";
 export async function handlePDF(form) {
 
     try {
-        const buttons = document.querySelectorAll('button');
+        const buttons = document.querySelectorAll('.to-hide');
 
         // Hide all buttons before generating the PDF
         buttons.forEach(button => button.classList.add('hide-for-pdf'));
