@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "../../components/button/Button.jsx";
 import './user.css'
 import axios from "axios";
@@ -10,8 +10,10 @@ function User() {
         username: '',
         email: '',
         role: '',
-        company: ''
+        companyId: ''
     });
+
+    const [companies, setCompanies] = useState([]);
 
     function handleChange(e) {
         const {name, value} = e.target;
@@ -35,6 +37,21 @@ function User() {
         }
 
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/companies", {
+                    withCredentials: true
+                });
+                setCompanies(response.data);
+                console.log("Fetched companies: ", response.data);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        void fetchData();
+    }, []);
 
     return (
         <div>
@@ -69,16 +86,19 @@ function User() {
                             <option value="MANAGER">MANAGER</option>
                             <option value="USER">USER</option>
                         </select></div>
-                    <div className="user-form-row"><label htmlFor="company">Company</label>
+                    <div className="user-form-row"><label htmlFor="companyId">Company</label>
                         <select
-                            name="company"
-                            id="company"
-                            value={formData.company}
-                            onChange={handleChange}>
+                            name="companyId"
+                            id="companyId"
+                            value={formData.companyId}
+                            onChange={handleChange}
+                        >
+                            {
+                                companies.map((company) => (
+                                    <option key={company.id} value={company.id}>{company.name}</option>
+                                ))
+                            }
 
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
                         </select>
                     </div>
                 </div>

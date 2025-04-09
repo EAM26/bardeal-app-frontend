@@ -131,6 +131,10 @@ function AlarmIntakeForm() {
         } else {
             console.log("Form submission failed");
         }
+        console.log("*********************");
+        console.log(JSON.stringify(formData).length); // bytes
+        console.log("*********************");
+
 
     }
 
