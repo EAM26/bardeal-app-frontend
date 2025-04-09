@@ -564,7 +564,10 @@ function AlarmIntakeForm() {
                     </FormRow>
                     </div>
                     <div className="block no-break"><h3>Inventarisatie naar attractiviteit en waarde</h3>
-                        <div className="block"><span>Attractieve zaken inboedel (woningen)</span>
+                        <div
+                            // className="block"
+                        >
+                            <span>Attractieve zaken inboedel (woningen)</span>
                             <span>Waarde in euro's</span>
                             <FormRow showLabel={false}>
                                 {formData.housesValueAttractiveness.map((item, index) => (
@@ -595,13 +598,15 @@ function AlarmIntakeForm() {
                                 ))}
                             </FormRow>
                         </div>
-                    </div>
+
                     <Button
-                        classname="align-left logout"
+                        classname="align-left add-row"
                         type="button"
                         onClick={addHouseAttractivenessRow}>+ Voeg toe
                     </Button>
-                    <div className="block">
+                    <div
+                        // className="block"
+                    >
                         <span>Attractieve goederen en inventaris (bedrijven)</span>
                         <span>Waarde in euro's</span>
                     <FormRow showLabel={false}>
@@ -633,8 +638,9 @@ function AlarmIntakeForm() {
                         ))}
                     </FormRow>
                     </div>
-                    <Button classname="align-left" type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
+                    <Button classname="align-left add-row" type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
 
+                </div>
                 </div>
                 <Button classname="submit" type="submit">Submit</Button>
             </form>

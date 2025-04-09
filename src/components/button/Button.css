@@ -10,6 +10,17 @@ button {
     font-size: 20px;
 }
 
+.add-row {
+    background-color: black;
+    color: white;
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+
+
 .hide-for-pdf {
     display: none !important;
 }
