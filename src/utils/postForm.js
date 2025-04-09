@@ -5,8 +5,8 @@ export async function handleIntakeForm (formData, form)  {
 
     try {
 
-        const alarmIntake = {
-            companyName: formData.clientName,
+        const inputDTO = {
+            clientName: formData.clientName,
             timestamp: new Date().toISOString(),
             text: 'Alarm intake via PDF submit'
         };
@@ -18,7 +18,7 @@ export async function handleIntakeForm (formData, form)  {
         }
 
         const uploadData = new FormData();
-        uploadData.append('alarmIntake', new Blob([JSON.stringify(alarmIntake)], {type: 'application/json'}));
+        uploadData.append('inputDTO', new Blob([JSON.stringify(inputDTO)], {type: 'application/json'}));
         uploadData.append('pdfFile', pdfBlob, 'intakeformulier.pdf');
         console.log("******************;")
         console.log("📄 PDF size in KB:", (pdfBlob.size / 1024).toFixed(2));
