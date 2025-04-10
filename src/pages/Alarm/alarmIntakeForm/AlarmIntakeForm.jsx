@@ -141,25 +141,25 @@ function AlarmIntakeForm() {
     }
 
     return (
-        <div className="outer_container">
+        // <div className="outer_container">
             <form onSubmit={handleSubmit}>
                 <div className="inner_container">
                     <h2>VRKI Intakedocument</h2>
-                    <h5>Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
-                        wensen van de aanvrager</h5>
-                    <div className="top-row-input">
-                        <label htmlFor="version">
-                        VRKI 2.0 versie:
-                        <input
-                            // className="top-row-input"
-                            id="version"
-                            name="version"
-                            type="text"
-                            value={formData.version}
-                            onChange={handleChange}
-                        />
-                    </label>
-                        <label htmlFor="date">
+                    <p className="p-blue">Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
+                        wensen van de aanvrager</p>
+                    <div className="top-row-outer">
+                        <div className="top-row-inner"><label htmlFor="version">
+                            VRKI 2.0 versie:
+                            <input
+                                // className="top-row-input"
+                                id="version"
+                                name="version"
+                                type="text"
+                                value={formData.version}
+                                onChange={handleChange}
+                            />
+                        </label></div>
+                        <div className="top-row-inner"><label htmlFor="date">
                             Datum:
                             <input
                                 id="date"
@@ -168,18 +168,19 @@ function AlarmIntakeForm() {
                                 value={formData.date}
                                 onChange={handleChange}
                             />
-                        </label>
-                        <label htmlFor="projectNumber">
-                            Projectnummer:
-                            <input
-                                // className="top-row-input"
-                                id="projectNumber"
-                                name="projectNumber"
-                                type="text"
-                                value={formData.projectNumber}
-                                onChange={handleChange}
-                            />
-                        </label>
+                        </label></div>
+                        <div className="top-row-inner">
+                            <label htmlFor="projectNumber">
+                                Projectnummer:
+                                <input
+                                    // className="top-row-input"
+                                    id="projectNumber"
+                                    name="projectNumber"
+                                    type="text"
+                                    value={formData.projectNumber}
+                                    onChange={handleChange}
+                                />
+                            </label></div>
                     </div>
                     <h3>Gegevens risico-object</h3>
                     <div className="block"><FormRow
@@ -646,7 +647,7 @@ function AlarmIntakeForm() {
                 </div>
                 <Button classname="submit logout to-hide" type="submit">Submit</Button>
             </form>
-        </div>
+        // </div>
     );
 
 }
