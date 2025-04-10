@@ -67,13 +67,11 @@ input {
 .top-row-inner {
     display: flex;
     flex-direction: row;
-    /*background-color: green;*/
 }
 
 .top-row-outer label {
     display: flex;
     font-size: 12px;
-    /*flex-direction: column;*/
     max-width: 30%; /* Ensure each label takes up a maximum of 30% of the parent */
     flex: 1;
     margin: 5px;
@@ -85,12 +83,17 @@ input {
     justify-content: space-between;
     font-size: 12px;
     padding: 0 125px;
-    /*background-color: green;*/
 }
-/*input[type="text"], input[type="date"] {*/
-/*    !*width: 100%; !* Make input take full width of label *!*!*/
-/*    box-sizing: border-box; !* Include padding in width calculation *!*/
-/*}*/
+
+.maintenance-row {
+    display: flex;
+    align-items: center;
+}
+
+.maintenance-row p {
+    padding-left: 3px;
+}
+
 
 .align-left {
     align-self: flex-start;

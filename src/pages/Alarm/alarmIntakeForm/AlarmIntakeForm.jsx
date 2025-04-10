@@ -512,7 +512,7 @@ function AlarmIntakeForm() {
                             />
                         </FormRow>
                         <FormRow showLabel={true} rowName="Onderhoud">
-                            <label>
+                            <div className="maintenance-row"><label>
                                 <input
                                     type="checkbox"
                                     name="maintenance"
@@ -522,25 +522,25 @@ function AlarmIntakeForm() {
                                         setFormData((prev) => ({
                                             ...prev,
                                             maintenance: isChecked,
-                                            maintenanceFrequency: isChecked ? prev.maintenanceFrequency : 0
+                                            maintenanceFrequency: isChecked ? 1 : 0
                                         }));
                                     }}
                                 />
                                 Contract voor onderhoud
                             </label>
 
-                            {formData.maintenance && (
-                                <input
-                                    type="number"
-                                    name="maintenanceFrequency"
-                                    value={formData.maintenanceFrequency}
-                                    onChange={handleChange}
-                                    // placeholder="keer per jaar"
-                                    style={{marginLeft: '1em', width: '100px'}}
+                                {formData.maintenance && (
+                                    <input
+                                        type="number"
+                                        name="maintenanceFrequency"
+                                        value={formData.maintenanceFrequency}
+                                        onChange={handleChange}
+                                        // placeholder="keer per jaar"
+                                        style={{marginLeft: '1em', width: '100px'}}
 
-                                />
-                            )}
-                            <span>   keer per jaar</span>
+                                    />
+                                )}
+                                <p>keer per jaar</p></div>
                         </FormRow></div>
                     <h3>Aanvrager wenst offerte/aanbieding</h3>
                     <div className="block"><FormRow
