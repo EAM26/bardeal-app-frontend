@@ -6,7 +6,6 @@ h2, h3, h4, h5 {
 }
 
 
-
 form {
     margin: auto;
     max-width: 1000px;
@@ -81,6 +80,13 @@ input {
     white-space: nowrap; /* Prevent text from breaking */
 }
 
+.header-add-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 0 125px;
+    /*background-color: green;*/
+}
 /*input[type="text"], input[type="date"] {*/
 /*    !*width: 100%; !* Make input take full width of label *!*!*/
 /*    box-sizing: border-box; !* Include padding in width calculation *!*/

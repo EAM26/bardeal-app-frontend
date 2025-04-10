@@ -570,8 +570,9 @@ function AlarmIntakeForm() {
                         <div
                             // className="block"
                         >
-                            <span>Attractieve zaken inboedel (woningen)</span>
-                            <span>Waarde in euro's</span>
+                            <div className="header-add-row"><span>Attractieve zaken inboedel (woningen)</span>
+                                <span>Waarde in euro's</span>
+                            </div>
                             <FormRow showLabel={false}>
                                 {formData.housesValueAttractiveness.map((item, index) => (
                                     <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
@@ -610,8 +611,9 @@ function AlarmIntakeForm() {
                     <div
                         // className="block"
                     >
-                        <span>Attractieve goederen en inventaris (bedrijven)</span>
-                        <span>Waarde in euro's</span>
+                        <div className="header-add-row"><span>Attractieve goederen en inventaris (bedrijven)</span>
+                            <span>Waarde in euro's</span>
+                        </div>
                     <FormRow showLabel={false}>
                         {formData.companiesValueAttractiveness.map((item, index) => (
                             <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
