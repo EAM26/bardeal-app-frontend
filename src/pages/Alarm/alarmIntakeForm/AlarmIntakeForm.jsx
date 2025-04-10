@@ -278,24 +278,25 @@ function AlarmIntakeForm() {
                             />
                         </FormRow>
                         <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
-                            <div className="double-split"><label>
-                                <input
-                                    type="checkbox"
-                                    name="vebQualityMark"
-                                    checked={formData.vebQualityMark || false}
-                                    onChange={(e) =>
-                                        setFormData((prev) => ({
-                                            ...prev,
-                                            [e.target.name]: e.target.checked,
-                                        }))
-                                    }
-                                />
-                                VEB kwaliteitsregeling
-                            </label>
+                            <div className="double-split">
+                            {/*    <label>*/}
+                            {/*    <input*/}
+                            {/*        type="checkbox"*/}
+                            {/*        name="vebQualityMark"*/}
+                            {/*        checked={formData.vebQualityMark || false}*/}
+                            {/*        onChange={(e) =>*/}
+                            {/*            setFormData((prev) => ({*/}
+                            {/*                ...prev,*/}
+                            {/*                [e.target.name]: e.target.checked,*/}
+                            {/*            }))*/}
+                            {/*        }*/}
+                            {/*    />*/}
+                            {/*    VEB kwaliteitsregeling*/}
+                            {/*</label>*/}
                                 <InnerRowRBs
                                     type="radio"
                                     name="borgCertification"
-                                    splitValue={1}
+                                    splitValue={2}
                                     selected={formData.borgCertification || ''}
                                     onChange={(e) =>
                                         setFormData((prev) => ({
@@ -303,7 +304,7 @@ function AlarmIntakeForm() {
                                             [e.target.name]: e.target.value,
                                         }))
                                     }
-                                    options={['CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
+                                    options={['VEB kwaliteitsregeling','CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
                                     split={true}
                                 /></div>
 

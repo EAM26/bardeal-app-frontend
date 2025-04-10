@@ -20,10 +20,10 @@ export async function handleIntakeForm (formData, form)  {
         const uploadData = new FormData();
         uploadData.append('inputDTO', new Blob([JSON.stringify(inputDTO)], {type: 'application/json'}));
         uploadData.append('pdfFile', pdfBlob, 'intakeformulier.pdf');
-        console.log("******************;")
-        console.log("📄 PDF size in KB:", (pdfBlob.size / 1024).toFixed(2));
-        console.log("📄 PDF size in MB:", (pdfBlob.size / 1024 / 1024).toFixed(2));
-        console.log("******************;")
+        // console.log("******************;")
+        // console.log("📄 PDF size in KB:", (pdfBlob.size / 1024).toFixed(2));
+        // console.log("📄 PDF size in MB:", (pdfBlob.size / 1024 / 1024).toFixed(2));
+        // console.log("******************;")
 
 
         const response = await axios.post('http://localhost:8080/alarm', uploadData, {

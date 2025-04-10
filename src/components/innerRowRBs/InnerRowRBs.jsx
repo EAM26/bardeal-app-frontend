@@ -43,10 +43,16 @@ function InnerRowRBs({ type, name, selected, onChange, options = [], split, spli
             {!split ? (
                 renderOptions(options)
             ) : (
+                // <div className="split">
+                //     <div>{renderOptions(options.slice(0, splitValue))}</div>
+                //     <div>{renderOptions(options.slice(splitValue))}</div>
+                //
+                // </div>
                 <div className="split">
                     <div>{renderOptions(options.slice(0, splitValue))}</div>
-                    <div>{renderOptions(options.slice(splitValue))}</div>
+                    <div className="column-split">{renderOptions(options.slice(splitValue))}</div>
                 </div>
+
             )}
         </div>
     );
