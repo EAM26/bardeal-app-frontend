@@ -1,6 +1,6 @@
-.double-split {
-    display: flex;
-}
+/*.double-split {*/
+/*    display: flex;*/
+/*}*/
 
 .not_split, .split {
     display: flex;
@@ -23,9 +23,25 @@ label:hover {
     /*background-color: #e0e0e0; !* Slight change on hover *!*/
 }
 
+input[type="text"] {
+    width: 250px;
+}
+
 input[type="radio"], input[type="checkbox"] {
     margin-right: 6px; /* Space between the button and the label text */
 }
+
+.column-split {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* space between the two vertical radios */
+}
+
+.split > .column-split {
+    flex-direction: column !important;
+}
+
+
 
 .split div, .not_split {
     margin-bottom: 5px; /* Space between rows when wrapped */

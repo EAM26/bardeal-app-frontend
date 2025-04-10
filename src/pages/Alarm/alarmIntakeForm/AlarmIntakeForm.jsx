@@ -141,25 +141,25 @@ function AlarmIntakeForm() {
     }
 
     return (
-        <div className="outer_container">
+        // <div className="outer_container">
             <form onSubmit={handleSubmit}>
                 <div className="inner_container">
                     <h2>VRKI Intakedocument</h2>
-                    <h5>Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
-                        wensen van de aanvrager</h5>
-                    <div className="top-row-input">
-                        <label htmlFor="version">
-                        VRKI 2.0 versie:
-                        <input
-                            // className="top-row-input"
-                            id="version"
-                            name="version"
-                            type="text"
-                            value={formData.version}
-                            onChange={handleChange}
-                        />
-                    </label>
-                        <label htmlFor="date">
+                    <p className="p-blue">Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
+                        wensen van de aanvrager</p>
+                    <div className="top-row-outer">
+                        <div className="top-row-inner"><label htmlFor="version">
+                            VRKI 2.0 versie:
+                            <input
+                                // className="top-row-input"
+                                id="version"
+                                name="version"
+                                type="text"
+                                value={formData.version}
+                                onChange={handleChange}
+                            />
+                        </label></div>
+                        <div className="top-row-inner"><label htmlFor="date">
                             Datum:
                             <input
                                 id="date"
@@ -168,18 +168,19 @@ function AlarmIntakeForm() {
                                 value={formData.date}
                                 onChange={handleChange}
                             />
-                        </label>
-                        <label htmlFor="projectNumber">
-                            Projectnummer:
-                            <input
-                                // className="top-row-input"
-                                id="projectNumber"
-                                name="projectNumber"
-                                type="text"
-                                value={formData.projectNumber}
-                                onChange={handleChange}
-                            />
-                        </label>
+                        </label></div>
+                        <div className="top-row-inner">
+                            <label htmlFor="projectNumber">
+                                Projectnummer:
+                                <input
+                                    // className="top-row-input"
+                                    id="projectNumber"
+                                    name="projectNumber"
+                                    type="text"
+                                    value={formData.projectNumber}
+                                    onChange={handleChange}
+                                />
+                            </label></div>
                     </div>
                     <h3>Gegevens risico-object</h3>
                     <div className="block"><FormRow
@@ -277,24 +278,25 @@ function AlarmIntakeForm() {
                             />
                         </FormRow>
                         <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
-                            <div className="double-split"><label>
-                                <input
-                                    type="checkbox"
-                                    name="vebQualityMark"
-                                    checked={formData.vebQualityMark || false}
-                                    onChange={(e) =>
-                                        setFormData((prev) => ({
-                                            ...prev,
-                                            [e.target.name]: e.target.checked,
-                                        }))
-                                    }
-                                />
-                                VEB kwaliteitsregeling
-                            </label>
+                            <div className="double-split">
+                            {/*    <label>*/}
+                            {/*    <input*/}
+                            {/*        type="checkbox"*/}
+                            {/*        name="vebQualityMark"*/}
+                            {/*        checked={formData.vebQualityMark || false}*/}
+                            {/*        onChange={(e) =>*/}
+                            {/*            setFormData((prev) => ({*/}
+                            {/*                ...prev,*/}
+                            {/*                [e.target.name]: e.target.checked,*/}
+                            {/*            }))*/}
+                            {/*        }*/}
+                            {/*    />*/}
+                            {/*    VEB kwaliteitsregeling*/}
+                            {/*</label>*/}
                                 <InnerRowRBs
                                     type="radio"
                                     name="borgCertification"
-                                    splitValue={1}
+                                    splitValue={2}
                                     selected={formData.borgCertification || ''}
                                     onChange={(e) =>
                                         setFormData((prev) => ({
@@ -302,7 +304,7 @@ function AlarmIntakeForm() {
                                             [e.target.name]: e.target.value,
                                         }))
                                     }
-                                    options={['CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
+                                    options={['VEB kwaliteitsregeling','CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
                                     split={true}
                                 /></div>
 
@@ -511,7 +513,7 @@ function AlarmIntakeForm() {
                             />
                         </FormRow>
                         <FormRow showLabel={true} rowName="Onderhoud">
-                            <label>
+                            <div className="maintenance-row"><label>
                                 <input
                                     type="checkbox"
                                     name="maintenance"
@@ -521,25 +523,25 @@ function AlarmIntakeForm() {
                                         setFormData((prev) => ({
                                             ...prev,
                                             maintenance: isChecked,
-                                            maintenanceFrequency: isChecked ? prev.maintenanceFrequency : 0
+                                            maintenanceFrequency: isChecked ? 1 : 0
                                         }));
                                     }}
                                 />
                                 Contract voor onderhoud
                             </label>
 
-                            {formData.maintenance && (
-                                <input
-                                    type="number"
-                                    name="maintenanceFrequency"
-                                    value={formData.maintenanceFrequency}
-                                    onChange={handleChange}
-                                    // placeholder="keer per jaar"
-                                    style={{marginLeft: '1em', width: '100px'}}
+                                {formData.maintenance && (
+                                    <input
+                                        type="number"
+                                        name="maintenanceFrequency"
+                                        value={formData.maintenanceFrequency}
+                                        onChange={handleChange}
+                                        // placeholder="keer per jaar"
+                                        style={{marginLeft: '1em', width: '100px'}}
 
-                                />
-                            )}
-                            <span>   keer per jaar</span>
+                                    />
+                                )}
+                                <p>keer per jaar</p></div>
                         </FormRow></div>
                     <h3>Aanvrager wenst offerte/aanbieding</h3>
                     <div className="block"><FormRow
@@ -569,8 +571,9 @@ function AlarmIntakeForm() {
                         <div
                             // className="block"
                         >
-                            <span>Attractieve zaken inboedel (woningen)</span>
-                            <span>Waarde in euro's</span>
+                            <div className="header-add-row"><span>Attractieve zaken inboedel (woningen)</span>
+                                <span>Waarde in euro's</span>
+                            </div>
                             <FormRow showLabel={false}>
                                 {formData.housesValueAttractiveness.map((item, index) => (
                                     <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
@@ -589,7 +592,7 @@ function AlarmIntakeForm() {
                                             style={{flex: 1}}
                                         />
                                         <button
-                                            className="print-hidden"
+                                            className="to-hide"
                                             type="button"
                                             onClick={() => removeHouseAttractivenessRow(index)}
                                             style={{marginLeft: '0.5em'}}
@@ -609,8 +612,9 @@ function AlarmIntakeForm() {
                     <div
                         // className="block"
                     >
-                        <span>Attractieve goederen en inventaris (bedrijven)</span>
-                        <span>Waarde in euro's</span>
+                        <div className="header-add-row"><span>Attractieve goederen en inventaris (bedrijven)</span>
+                            <span>Waarde in euro's</span>
+                        </div>
                     <FormRow showLabel={false}>
                         {formData.companiesValueAttractiveness.map((item, index) => (
                             <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
@@ -629,7 +633,7 @@ function AlarmIntakeForm() {
                                     style={{flex: 1}}
                                 />
                                 <button
-                                    className="print-hidden"
+                                    className="to-hide"
                                     type="button"
                                     onClick={() => removeCompanyAttractivenessRow(index)}
                                     style={{marginLeft: '0.5em'}}
@@ -646,7 +650,7 @@ function AlarmIntakeForm() {
                 </div>
                 <Button classname="submit logout to-hide" type="submit">Submit</Button>
             </form>
-        </div>
+        // </div>
     );
 
 }

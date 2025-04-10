@@ -5,11 +5,13 @@ h2, h3, h4, h5 {
 
 }
 
+
 form {
     margin: auto;
     max-width: 1000px;
-    padding: 15px 30px;
-    border: 1px solid #ccc;
+    /*padding: 15px 30px;*/
+    padding: 15px 0;
+    /*border: 1px solid #ccc;*/
     background-color: #f9f9f9;
     border-radius: 5px;
     /*display: flex;*/
@@ -18,11 +20,12 @@ form {
 
 input {
     padding: 3px;
+    border: none;
 }
 
 
 .outer_container {
-    padding: 10px;
+    /*padding: 10px;*/
     /*background-color: orange;*/
 
 }
@@ -33,8 +36,13 @@ input {
     align-items: center;
 }
 
+.p-blue {
+    color: royalblue;
+    font-size: 12px;
+}
+
 .block {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     margin: 10px 0;
     width: 100%;
     /*background-color: green;*/
@@ -44,30 +52,48 @@ input {
     margin: 10px 0;
 }
 
-.top-row-input {
+.top-row-outer {
     display: flex;
 
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     /*align-content: center;*/
     /*flex-wrap: nowrap; !* Prevent wrapping *!*/
-    width: 60%;
+    /*width: 60%;*/
+    width: 90%;
     /*max-width: 100%; !* Ensure it never exceeds the parent *!*/
     /*gap: 10px; !* Space between labels *!*/
 }
 
-.top-row-input label {
+.top-row-inner {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.top-row-outer label {
+    display: flex;
+    font-size: 12px;
     max-width: 30%; /* Ensure each label takes up a maximum of 30% of the parent */
     flex: 1;
     margin: 5px;
     white-space: nowrap; /* Prevent text from breaking */
 }
 
-input[type="text"], input[type="date"] {
-    width: 100%; /* Make input take full width of label */
-    box-sizing: border-box; /* Include padding in width calculation */
+.header-add-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 0 125px;
 }
+
+.maintenance-row {
+    display: flex;
+    align-items: center;
+}
+
+.maintenance-row p {
+    padding-left: 3px;
+}
+
 
 .align-left {
     align-self: flex-start;
