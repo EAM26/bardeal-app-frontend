@@ -591,7 +591,7 @@ function AlarmIntakeForm() {
                                             style={{flex: 1}}
                                         />
                                         <button
-                                            className="print-hidden"
+                                            className="to-hide"
                                             type="button"
                                             onClick={() => removeHouseAttractivenessRow(index)}
                                             style={{marginLeft: '0.5em'}}
@@ -632,7 +632,7 @@ function AlarmIntakeForm() {
                                     style={{flex: 1}}
                                 />
                                 <button
-                                    className="print-hidden"
+                                    className="to-hide"
                                     type="button"
                                     onClick={() => removeCompanyAttractivenessRow(index)}
                                     style={{marginLeft: '0.5em'}}
