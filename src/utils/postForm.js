@@ -26,8 +26,8 @@ export async function handleIntakeForm (formData, form)  {
         // console.log("******************;")
 
 
-        const response = await axios.post('http://localhost:8080/alarm', uploadData, {
-        // const response = await axios.post('http://localhost:8080/fake-request', uploadData, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/alarm`, uploadData, {
+        // const response = await axios.post('http://217.123.94.45:8080/fake-request', uploadData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data'

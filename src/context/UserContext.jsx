@@ -10,7 +10,7 @@ export default function UserContextProvider({ children }) {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/me", {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/me`, {
                     withCredentials: true
                 });
                 setUser(response.data);

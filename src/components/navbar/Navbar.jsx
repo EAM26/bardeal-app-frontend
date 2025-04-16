@@ -7,7 +7,7 @@ function Navbar() {
     const { user } = useUser();
 
     const handleLogout = () => {
-        window.location.href = "http://localhost:8080/logout";
+        window.location.href = `${import.meta.env.VITE_API_URL}/logout`;
     };
 
     return (

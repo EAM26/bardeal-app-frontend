@@ -5,16 +5,19 @@ import { useUser } from "../../context/useUser.js";
 function Home() {
     const { user } = useUser();
 
+
     return (
         <div className="outer-container">
             <h1>Homepage</h1>
-
             {user ? (
-                <p>Welcome, {user.username}!</p>
+                <p>
+                    Welcome, {user.username}!
+                </p>
+
             ) : (
                 <div>
                     <p>You are not logged in.</p>
-                    <button onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google"}>
+                    <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`}>
                         Login with Google
                     </button>
 

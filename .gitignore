@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 /src/assets/react.svg
 /public/images/under_construction.png
+/src/pages/testpages/testform.html
+/src/pages/testpages/testformstyle.css
+/.env
