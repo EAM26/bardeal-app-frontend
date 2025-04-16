@@ -23,7 +23,7 @@ function User() {
     async function handleSubmit(e) {
         e.preventDefault();
         console.log(formData);
-        const response = await axios.post('http://localhost:8080/users', formData, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/users`, formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ function User() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/companies", {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/companies`, {
                     withCredentials: true
                 });
                 setCompanies(response.data);

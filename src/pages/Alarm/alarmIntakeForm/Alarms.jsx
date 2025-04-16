@@ -7,7 +7,7 @@ function Alarms() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/alarm", {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/alarm`, {
                     withCredentials: true
                 });
                 setAlarmIntakes(response.data);
