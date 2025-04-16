@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Button from "../../components/button/Button.jsx";
 import './user.css'
 import axios from "axios";
+import {useUser} from "../../context/useUser.js";
 
 
 function User() {
@@ -13,6 +14,8 @@ function User() {
         companyId: ''
     });
 
+    const user = useUser();
+
     const [companies, setCompanies] = useState([]);
 
     function handleChange(e) {
@@ -23,6 +26,8 @@ function User() {
     async function handleSubmit(e) {
         e.preventDefault();
         console.log(formData);
+        console.log("Form role: ", formData.role);
+
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/users`, formData, {
             withCredentials: true,
             headers: {
@@ -40,6 +45,7 @@ function User() {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log(user)
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/companies`, {
                     withCredentials: true
@@ -82,7 +88,8 @@ function User() {
                             id="role"
                             value={formData.role}
                             onChange={handleChange}>
-                            <option value="ADMIM">ADMIN</option>
+                            <option value="">-- Select Role --</option>
+                            <option value="ADMIN">ADMIN</option>
                             <option value="MANAGER">MANAGER</option>
                             <option value="USER">USER</option>
                         </select></div>
@@ -93,6 +100,7 @@ function User() {
                             value={formData.companyId}
                             onChange={handleChange}
                         >
+                            <option value="">-- Select Role --</option>
                             {
                                 companies.map((company) => (
                                     <option key={company.id} value={company.id}>{company.name}</option>
