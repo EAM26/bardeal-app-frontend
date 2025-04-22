@@ -648,7 +648,7 @@ function AlarmIntakeForm() {
 
                 </div>
                 </div>
-                <Button classname="submit logout to-hide" type="submit">Submit</Button>
+                <Button classname="submit general-button to-hide" type="submit">Submit</Button>
             </form>
         // </div>
     );

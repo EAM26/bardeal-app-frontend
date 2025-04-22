@@ -2,7 +2,7 @@ button {
     cursor: pointer;
 }
 
-.logout {
+.general-button {
     background-color: black;
     color: white;
     padding: 10px 20px;

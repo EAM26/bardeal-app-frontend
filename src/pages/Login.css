@@ -3,3 +3,14 @@
     flex-direction: column;
     align-items: center;
 }
+
+.image-login {
+    width: 400px;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.login-button {
+    margin-top: 20px;
+}

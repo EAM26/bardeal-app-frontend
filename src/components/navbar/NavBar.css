@@ -1,18 +1,32 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 30px;
+    background-color: #003366;
+}
+
+
 .nav-links {
     /*max-width: 80%;*/
-    margin: auto;
+    /*margin: auto;*/
     display: flex;
     justify-content: space-between;
     align-items: center;
     /*background-color: #ff6400;*/
-    padding: 1% 10%;
+    /*padding: 1% 10%;*/
 
+}
+
+.nav-link {
+    padding: 0 10px;
 }
 
 .nav-links h2  {
-    color: black;
+    color: orange;
     font-size: 30px;
 }
+
 
 
 
