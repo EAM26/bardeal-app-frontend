@@ -1,9 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Users.css'
+import Button from "../../components/button/Button.jsx";
 
 function Users() {
     const [users, setUsers] = useState([]);
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/users/${id}`, {
+                withCredentials: true
+            });
+
+            setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
+            console.log(`User with id ${id} deleted`);
+        } catch (e) {
+            console.error(`Failed to delete user with id ${id}`, e);
+        }
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +43,7 @@ function Users() {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Company Id</th>
+                    {/*<th>Company Id</th>*/}
                     <th>Company Name</th>
                 </tr>
                 </thead>
@@ -40,8 +54,10 @@ function Users() {
                         <td>{user.username}</td>
                         <td>{user.email}</td>
                         <td>{user.role}</td>
-                        <td className="center-content">{user.companyId}</td>
+                        {/*<td className="center-content">{user.companyId}</td>*/}
                         <td>{user.companyName}</td>
+                        <Button type="button" onClick={() => handleDelete(user.id)}>delete</Button>
+
                     </tr>
                 ))}
                 </tbody>
