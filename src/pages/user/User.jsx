@@ -38,7 +38,7 @@ function User() {
                 }
             });
 
-            setStatusMessage({type: 'success', message: 'User successfully created.'});
+            setStatusMessage({type: 'success', message: 'User: '+ response.data.username +', successfully created.'});
             await new Promise(resolve => setTimeout(resolve, 4000));
             window.location.reload();
 
@@ -116,7 +116,7 @@ function User() {
                             value={formData.companyId}
                             onChange={handleChange}
                         >
-                            <option value="">-- Select Role --</option>
+                            <option value="">-- Select Company --</option>
                             {
                                 companies.map((company) => (
                                     <option key={company.id} value={company.id}>{company.name}</option>
