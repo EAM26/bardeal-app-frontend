@@ -5,6 +5,7 @@ import InnerRowRBs from "../../../components/innerRowRBs/InnerRowRBs.jsx";
 import './AlarmIntakeForm.css'
 import '../../../components/button/Button.css'
 import handleIntakeForm from "../../../utils/postForm.js";
+import FloatingMessage from "../../../components/floatingMessage/FloatingMessage.jsx";
 import {
     ORGANIZATION_ADDRESS,
     ORGANIZATION_EMAIL,
@@ -14,6 +15,7 @@ import {
 } from "../../../companyConfig.js";
 
 function AlarmIntakeForm() {
+    const [statusMessage, setStatusMessage] = useState(null);
     const [formData, setFormData] = useState({
         version: '',
         date: '',
@@ -122,27 +124,41 @@ function AlarmIntakeForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setStatusMessage({ type: 'info', message: 'Sending...' });
+
         const form = e.target;
         console.log(formData);
         const success = await handleIntakeForm(formData, form);
         if (success) {
-            console.log("Form created and submitted");
+            setStatusMessage({type: 'success', message: 'Mail sent successfully.'});
+            await new Promise(resolve => setTimeout(resolve, 3000));
             window.location.reload();
         } else {
-            console.log("Form submission failed");
+            setStatusMessage({type: 'error', message: 'Error in sending email.'});
             const buttons = document.querySelectorAll('.to-hide');
             buttons.forEach(btn => btn.classList.remove('hide-for-pdf'));
+            await new Promise(resolve => setTimeout(resolve, 3000));
+                setStatusMessage(null);
         }
-        console.log("*********************");
-        console.log(JSON.stringify(formData).length); // bytes
-        console.log("*********************");
+        // console.log("bytes: " + JSON.stringify(formData).length);
 
 
     }
 
     return (
-        // <div className="outer_container">
-            <form onSubmit={handleSubmit}>
+        <div className="outer_container">
+
+            {statusMessage && (
+                <FloatingMessage type={statusMessage.type} message={statusMessage.message} />
+            )}
+
+            <form onSubmit={handleSubmit}
+                  onKeyDown={(e) => {
+                      if (e.key === 'Enter' && e.target.nodeName !== 'TEXTAREA') {
+                          e.preventDefault();
+                      }
+                  }}>
                 <div className="inner_container">
                     <h2>VRKI Intakedocument</h2>
                     <p className="p-blue">Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
@@ -650,7 +666,7 @@ function AlarmIntakeForm() {
                 </div>
                 <Button classname="submit general-button to-hide" type="submit">Submit</Button>
             </form>
-        // </div>
+         </div>
     );
 
 }
