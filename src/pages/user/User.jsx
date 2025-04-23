@@ -39,20 +39,18 @@ function User() {
             });
 
             setStatusMessage({type: 'success', message: 'User: '+ response.data.username +', successfully created.'});
-            await new Promise(resolve => setTimeout(resolve, 4000));
+            await new Promise(resolve => setTimeout(resolve, 2000));
             window.location.reload();
 
         } catch (e) {
             setStatusMessage({
-                type: 'error', message: 'Error in creating User.\n' +
+                type: 'error', message: 'Error in creating User: ' +
                     e.response.data
             });
-            await new Promise(resolve => setTimeout(resolve, 4000));
+            await new Promise(resolve => setTimeout(resolve, 3000));
             setStatusMessage(null)
             console.error(e);
         }
-
-
         setStatusMessage(null);
     }
 

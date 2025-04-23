@@ -13,7 +13,7 @@
 
 .modal-content {
     background: white;
-    padding: 20px;
+    padding: 20px 25px;
     border-radius: 8px;
     position: relative;
     min-width: 300px;
@@ -28,3 +28,28 @@
     font-size: 24px;
     cursor: pointer;
 }
+
+.modal-content.delete-modal {
+    background-color: #fff8f8;
+}
+
+.modal-content.delete-modal  {
+    color: #c0392b;
+    margin-top: 0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.delete-button {
+    padding: 2px 4px;
+    background-color: wheat;
+    border-radius: 5px;
+}
+
+
+

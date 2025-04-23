@@ -12,6 +12,11 @@ body {
   min-width: 1000px;
 }
 
+.outer {
+  padding: 10px 25px;
+  background-color: wheat;
+}
+
 
 
 
