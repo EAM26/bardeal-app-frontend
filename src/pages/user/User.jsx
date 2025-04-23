@@ -3,10 +3,12 @@ import Button from "../../components/button/Button.jsx";
 import './user.css'
 import axios from "axios";
 import {useUser} from "../../context/useUser.js";
+import FloatingMessage from "../../components/floatingMessage/FloatingMessage.jsx";
 
 
 function User() {
 
+    const [statusMessage, setStatusMessage] = useState(null);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -28,19 +30,30 @@ function User() {
         console.log(formData);
         console.log("Form role: ", formData.role);
 
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/users`, formData, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/users`, formData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
-        if (response.status === 201) {
-            console.log("Created user  ", response.data);
-        } else {
-            console.log("Error creating user");
+            setStatusMessage({type: 'success', message: 'User successfully created.'});
+            await new Promise(resolve => setTimeout(resolve, 4000));
+            window.location.reload();
+
+        } catch (e) {
+            setStatusMessage({
+                type: 'error', message: 'Error in creating User.\n' +
+                    e.response.data
+            });
+            await new Promise(resolve => setTimeout(resolve, 4000));
+            setStatusMessage(null)
+            console.error(e);
         }
 
+
+        setStatusMessage(null);
     }
 
     useEffect(() => {
@@ -61,6 +74,9 @@ function User() {
 
     return (
         <div>
+            {statusMessage && (
+                <FloatingMessage type={statusMessage.type} message={statusMessage.message}/>
+            )}
             <form
                 className="user-form"
                 onSubmit={handleSubmit}>
