@@ -108,28 +108,6 @@ function AlarmIntakeForm() {
         });
     };
 
-    // const handleChange = (e) => {
-    //     const {name, value} = e.target;
-    //
-    //     setFormData(prev => {
-    //         const updated = {...prev, [name]: value};
-    //
-    //         if (name === 'designatedObject' && value !== 'Anders, namelijk:') {
-    //             updated.customDesignatedObject = '';
-    //         }
-    //
-    //         if (name === 'requestingParty' && value !== 'Anders, namelijk:') {
-    //             updated.customRequestingParty = '';
-    //         }
-    //
-    //         if (name === 'proposal' && value !== 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:') {
-    //             updated.customProposal = '';
-    //         }
-    //
-    //         return updated;
-    //     });
-    // };
-
     const handleHouseAttractivenessChange = (index, key, value) => {
         setFormData(prev => {
             const updatedList = [...prev.housesValueAttractiveness];
@@ -242,7 +220,6 @@ function AlarmIntakeForm() {
                             <label htmlFor="projectNumber">
                                 Projectnummer:
                                 <input
-                                    // className="top-row-input"
                                     id="projectNumber"
                                     name="projectNumber"
                                     type="text"
@@ -340,7 +317,6 @@ function AlarmIntakeForm() {
                             <p>{ORGANIZATION_EMAIL}</p>
                         </FormRow>
                         <FormRow showLabel={true} rowName="Intakedocument opgesteld door: ">
-                            {/*<span>Bevoegd persoon Naam:</span>*/}
                             <input
                                 type="text"
                                 name="employee"
@@ -350,20 +326,17 @@ function AlarmIntakeForm() {
                             />
                         </FormRow>
                         <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
-                            <div className="double-split">
+                            <div>
                                 <InnerRowRBs
                                     type="radio"
                                     name="borgCertification"
-                                    splitValue={2}
                                     selected={formData.borgCertification || ''}
-                                    onChange={(e) =>
-                                        setFormData((prev) => ({
-                                            ...prev,
-                                            [e.target.name]: e.target.value,
-                                        }))
-                                    }
-                                    options={['VEB kwaliteitsregeling', 'CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
+                                    firstOptionAlignCenter={true}
                                     split={true}
+                                    splitValue={1}
+                                    onChange={handleChange}
+                                    options={['VEB kwaliteitsregeling', 'CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
+
                                 /></div>
 
                         </FormRow>
@@ -408,8 +381,10 @@ function AlarmIntakeForm() {
                                 name="requestingParty"
                                 onChange={handleChange}
                                 selected={formData.requestingParty || ''}
-                                options={['Bewoner/ eigenaar/ beheerder', 'Verzekeraar',
-                                    'Anders, namelijk:']}/>
+                                split={true}
+                                splitValue={2}
+                                options={['Bewoner/ eigenaar/ beheerder', 'Anders, namelijk:', 'Verzekeraar'
+                                    ]}/>
                             {formData.requestingParty === 'Anders, namelijk:' && (
                                 <input
                                     type="text"
@@ -613,6 +588,8 @@ function AlarmIntakeForm() {
                     <div className="block"><FormRow
                         showLabel={false}>
                         <InnerRowRBs
+                            split={true}
+                            splitValue={0}
                             type="radio"
                             name="proposal"
                             onChange={handleChange}
