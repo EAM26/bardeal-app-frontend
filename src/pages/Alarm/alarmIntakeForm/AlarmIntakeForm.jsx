@@ -26,9 +26,17 @@ function AlarmIntakeForm() {
         phone: '',
         email: '',
         employee: '',
-        vebQualityMark: false,
         borgCertification: '',
-        designatedObject: '',
+        // designatedObject: '',
+        //     Designated Objects -> do...
+        doResidence: false,
+        doCompany: false,
+        doShop: false,
+        doWarehouse: false,
+        doSchool: false,
+        doGovernment: false,
+        doOther: false,
+        doOtherText: '',
         customDesignatedObject: '',
         requestingParty: '',
         customRequestingParty: '',
@@ -55,28 +63,72 @@ function AlarmIntakeForm() {
 
     });
 
+    const buildingOptions = [
+        {label: 'Woning', value: 'doResidence'},
+        {label: 'Bedrijf', value: 'doCompany'},
+        {label: 'Winkel/showroom', value: 'doShop'},
+        {label: 'Magazijn/opslag', value: 'doWarehouse'},
+        {label: 'Onderwijsinstelling', value: 'doSchool'},
+        {label: '(Semi) overheidsinstelling', value: 'doGovernment'},
+        {label: 'Anders, namelijk:', value: 'doOther'}
+    ];
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const {name, value, type, checked} = e.target;
 
         setFormData(prev => {
-            const updated = {...prev, [name]: value};
+            const updated = {...prev};
 
-            if (name === 'designatedObject' && value !== 'Anders, namelijk:') {
-                updated.customDesignatedObject = '';
+            // 1. Eerst checken of het een checkbox is
+            if (type === 'checkbox') {
+                updated[name] = checked;
+
+                // Speciale regel: als het de 'doOther' checkbox is
+                if (name === 'doOther' && !checked) {
+                    updated.doOtherText = ''; // ❗ Maak tekstveld leeg als afgevinkt
+                }
             }
+            // 2. Voor gewone tekstvelden, radiobuttons etc.
+            else {
+                updated[name] = value;
 
-            if (name === 'requestingParty' && value !== 'Anders, namelijk:') {
-                updated.customRequestingParty = '';
-            }
-
-            if (name === 'proposal' && value !== 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:') {
-                updated.customProposal = '';
+                // Speciale regels die je eerder al had
+                if (name === 'designatedObject' && value !== 'Anders, namelijk:') {
+                    updated.customDesignatedObject = '';
+                }
+                if (name === 'requestingParty' && value !== 'Anders, namelijk:') {
+                    updated.customRequestingParty = '';
+                }
+                if (name === 'proposal' && value !== 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:') {
+                    updated.customProposal = '';
+                }
             }
 
             return updated;
         });
     };
+
+    // const handleChange = (e) => {
+    //     const {name, value} = e.target;
+    //
+    //     setFormData(prev => {
+    //         const updated = {...prev, [name]: value};
+    //
+    //         if (name === 'designatedObject' && value !== 'Anders, namelijk:') {
+    //             updated.customDesignatedObject = '';
+    //         }
+    //
+    //         if (name === 'requestingParty' && value !== 'Anders, namelijk:') {
+    //             updated.customRequestingParty = '';
+    //         }
+    //
+    //         if (name === 'proposal' && value !== 'Afwijkende beveiligingsmaatregelen t.o.v VRKI 2.0, namelijk:') {
+    //             updated.customProposal = '';
+    //         }
+    //
+    //         return updated;
+    //     });
+    // };
 
     const handleHouseAttractivenessChange = (index, key, value) => {
         setFormData(prev => {
@@ -125,7 +177,7 @@ function AlarmIntakeForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setStatusMessage({ type: 'info', message: 'Sending...' });
+        setStatusMessage({type: 'info', message: 'Sending...'});
 
         const form = e.target;
         console.log(formData);
@@ -139,7 +191,7 @@ function AlarmIntakeForm() {
             const buttons = document.querySelectorAll('.to-hide');
             buttons.forEach(btn => btn.classList.remove('hide-for-pdf'));
             await new Promise(resolve => setTimeout(resolve, 3000));
-                setStatusMessage(null);
+            setStatusMessage(null);
         }
         // console.log("bytes: " + JSON.stringify(formData).length);
 
@@ -150,7 +202,7 @@ function AlarmIntakeForm() {
         <div className="outer_container">
 
             {statusMessage && (
-                <FloatingMessage type={statusMessage.type} message={statusMessage.message} />
+                <FloatingMessage type={statusMessage.type} message={statusMessage.message}/>
             )}
 
             <form onSubmit={handleSubmit}
@@ -161,7 +213,8 @@ function AlarmIntakeForm() {
                   }}>
                 <div className="inner_container">
                     <h2>VRKI Intakedocument</h2>
-                    <p className="p-blue">Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende beveiligingsmaatregelen en
+                    <p className="p-blue">Adviesdocument ter inventarisatie van de risicoklasse, bijbehorende
+                        beveiligingsmaatregelen en
                         wensen van de aanvrager</p>
                     <div className="top-row-outer">
                         <div className="top-row-inner"><label htmlFor="version">
@@ -199,17 +252,18 @@ function AlarmIntakeForm() {
                             </label></div>
                     </div>
                     <h3>Gegevens risico-object</h3>
-                    <div className="block"><FormRow
-                        showLabel={true}
-                        rowName="Naam"
-                    >
-                        <input
-                            type="text"
-                            name="clientName"
-                            value={formData.clientName}
-                            onChange={handleChange}
-                        />
-                    </FormRow>
+                    <div className="block">
+                        <FormRow
+                            showLabel={true}
+                            rowName="Naam"
+                        >
+                            <input
+                                type="text"
+                                name="clientName"
+                                value={formData.clientName}
+                                onChange={handleChange}
+                            />
+                        </FormRow>
                         <FormRow
                             showLabel={true}
                             rowName="Adres"
@@ -220,7 +274,8 @@ function AlarmIntakeForm() {
                                 value={formData.address}
                                 onChange={handleChange}
                             />
-                        </FormRow><FormRow
+                        </FormRow>
+                        <FormRow
                             showLabel={true}
                             rowName="Postcode/Plaats"
                         >
@@ -230,7 +285,8 @@ function AlarmIntakeForm() {
                                 value={formData.zipcode_place}
                                 onChange={handleChange}
                             />
-                        </FormRow><FormRow
+                        </FormRow>
+                        <FormRow
                             showLabel={true}
                             rowName="TelefoonNummer"
                         >
@@ -295,20 +351,6 @@ function AlarmIntakeForm() {
                         </FormRow>
                         <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
                             <div className="double-split">
-                            {/*    <label>*/}
-                            {/*    <input*/}
-                            {/*        type="checkbox"*/}
-                            {/*        name="vebQualityMark"*/}
-                            {/*        checked={formData.vebQualityMark || false}*/}
-                            {/*        onChange={(e) =>*/}
-                            {/*            setFormData((prev) => ({*/}
-                            {/*                ...prev,*/}
-                            {/*                [e.target.name]: e.target.checked,*/}
-                            {/*            }))*/}
-                            {/*        }*/}
-                            {/*    />*/}
-                            {/*    VEB kwaliteitsregeling*/}
-                            {/*</label>*/}
                                 <InnerRowRBs
                                     type="radio"
                                     name="borgCertification"
@@ -320,34 +362,42 @@ function AlarmIntakeForm() {
                                             [e.target.name]: e.target.value,
                                         }))
                                     }
-                                    options={['VEB kwaliteitsregeling','CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
+                                    options={['VEB kwaliteitsregeling', 'CCV Certificatieschema BORG-B', 'CCV Certificatieschema BORG-E']}
                                     split={true}
                                 /></div>
 
                         </FormRow>
                     </div>
                     <h3>Aanduiding object</h3>
+
                     <div className="block">
-                        <FormRow showLabel={false}>
-                            <InnerRowRBs
-                                type="radio"
-                                name="designatedObject"
-                                onChange={handleChange}
-                                selected={formData.designatedObject || ''}
-                                options={['Woning', 'Bedrijf', 'Winkel/showroom', 'Magazijn/opslag',
-                                    'Onderwijsinstelling', '(Semi) overheidsinstelling',
-                                    'Anders, namelijk:']}/>
-                            {formData.designatedObject === 'Anders, namelijk:' && (
-                                <input
-                                    type="text"
-                                    name="customDesignatedObject"
-                                    placeholder="Vul in..."
-                                    value={formData.customDesignatedObject || ''}
-                                    onChange={handleChange}
-                                    style={{marginTop: '0.5em', marginLeft: '1em'}}
-                                    required
-                                />
-                            )}
+                        <FormRow
+                            showLabel={false}
+                            rowName="designatedObject">
+                            {buildingOptions.map(({label, value}) => (
+                                <div key={value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            name={value}
+                                            checked={formData[value]}
+                                            onChange={handleChange}
+                                        />
+                                        {label}
+                                    </label>
+                                    {value === 'doOther' && (
+                                        <input
+                                            type="text"
+                                            name="doOtherText"
+                                            value={formData.doOtherText}
+                                            onChange={handleChange}
+                                            placeholder="Vul hier uw alternatief in"
+                                            disabled={!formData.doOther}
+                                        />
+                                    )}
+                                </div>
+                            ))}
+
                         </FormRow>
                     </div>
                     <h3>Eisende partij</h3>
@@ -620,53 +670,54 @@ function AlarmIntakeForm() {
                             </FormRow>
                         </div>
 
-                    <Button
-                        classname="align-left add-row to-hide"
-                        type="button"
-                        onClick={addHouseAttractivenessRow}>+ Voeg toe
-                    </Button>
-                    <div
-                        // className="block"
-                    >
-                        <div className="header-add-row"><span>Attractieve goederen en inventaris (bedrijven)</span>
-                            <span>Waarde in euro's</span>
-                        </div>
-                    <FormRow showLabel={false}>
-                        {formData.companiesValueAttractiveness.map((item, index) => (
-                            <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
-                                <input
-                                    type="text"
-                                    placeholder="Omschrijving"
-                                    value={item.name}
-                                    onChange={(e) => handleCompanyAttractivenessChange(index, 'name', e.target.value)}
-                                    style={{flex: 2}}
-                                />
-                                <input
-                                    type="number"
-                                    placeholder="€"
-                                    value={item.value}
-                                    onChange={(e) => handleCompanyAttractivenessChange(index, 'value', e.target.value)}
-                                    style={{flex: 1}}
-                                />
-                                <button
-                                    className="to-hide"
-                                    type="button"
-                                    onClick={() => removeCompanyAttractivenessRow(index)}
-                                    style={{marginLeft: '0.5em'}}
-                                >
-                                    X
-                                </button>
+                        <Button
+                            classname="align-left add-row to-hide"
+                            type="button"
+                            onClick={addHouseAttractivenessRow}>+ Voeg toe
+                        </Button>
+                        <div
+                            // className="block"
+                        >
+                            <div className="header-add-row"><span>Attractieve goederen en inventaris (bedrijven)</span>
+                                <span>Waarde in euro's</span>
                             </div>
-                        ))}
-                    </FormRow>
-                    </div>
-                    <Button classname="align-left add-row to-hide" type="button" onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
+                            <FormRow showLabel={false}>
+                                {formData.companiesValueAttractiveness.map((item, index) => (
+                                    <div key={index} style={{display: 'flex', gap: '1em', marginBottom: '0.5em'}}>
+                                        <input
+                                            type="text"
+                                            placeholder="Omschrijving"
+                                            value={item.name}
+                                            onChange={(e) => handleCompanyAttractivenessChange(index, 'name', e.target.value)}
+                                            style={{flex: 2}}
+                                        />
+                                        <input
+                                            type="number"
+                                            placeholder="€"
+                                            value={item.value}
+                                            onChange={(e) => handleCompanyAttractivenessChange(index, 'value', e.target.value)}
+                                            style={{flex: 1}}
+                                        />
+                                        <button
+                                            className="to-hide"
+                                            type="button"
+                                            onClick={() => removeCompanyAttractivenessRow(index)}
+                                            style={{marginLeft: '0.5em'}}
+                                        >
+                                            X
+                                        </button>
+                                    </div>
+                                ))}
+                            </FormRow>
+                        </div>
+                        <Button classname="align-left add-row to-hide" type="button"
+                                onClick={addCompanyAttractivenessRow}>+ Voeg toe</Button>
 
-                </div>
+                    </div>
                 </div>
                 <Button classname="submit general-button to-hide" type="submit">Submit</Button>
             </form>
-         </div>
+        </div>
     );
 
 }

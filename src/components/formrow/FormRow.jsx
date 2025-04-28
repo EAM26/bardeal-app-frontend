@@ -1,7 +1,7 @@
 import React from 'react';
 import './FormRow.css';
 
-function FormRow({ showLabel, rowName, children, className }) {
+function FormRow({ showLabel=true, rowName, children, className }) {
     return (
         <div className="form-row">
             {showLabel && (

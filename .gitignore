@@ -27,3 +27,6 @@ dist-ssr
 /src/pages/testpages/testform.html
 /src/pages/testpages/testformstyle.css
 /.env
+/src/components/MyRow.css
+/src/components/MyRow.jsx
+/src/components/RowOptions.js
