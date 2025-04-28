@@ -1,7 +1,7 @@
 import React from 'react';
 import './InnerRowRBs.css'
 
-function InnerRowRBs({ type, name, selected, onChange, options = [], split, splitValue, firstOptionAlignCenter = false }) {
+function InnerRowRBs({ type, name, selected, onChange, options = [], split, splitValue, firstOptionAlignCenter = false, className = '' }) {
     const isCheckbox = type === 'checkbox';
 
     const isChecked = (option) => {
@@ -41,28 +41,14 @@ function InnerRowRBs({ type, name, selected, onChange, options = [], split, spli
         ));
 
 
-    // const renderOptions = (subset) =>
-    //     subset.map((option) => (
-    //         <label
-    //             key={option}
-    //         >
-    //             <input
-    //                 type={type}
-    //                 name={name}
-    //                 value={option}
-    //                 checked={isChecked(option)}
-    //                 onChange={handleChange}
-    //             />
-    //             {option}
-    //         </label>
-    //     ));
-
     return (
-        <div className="not_split">
-            {!split ? (
+        // <div className="not_split">
+        <div className={`not_split ${split ? 'split' : ''} ${className}`}>
+
+        {!split ? (
                 renderOptions(options)
             ) : (
-                <div className="split">
+                <div className={`split ${firstOptionAlignCenter ? 'split-line' : ''}`}>
                     <div className="column-split">
                         {renderOptions(options.slice(0, splitValue), 0)}
                     </div>

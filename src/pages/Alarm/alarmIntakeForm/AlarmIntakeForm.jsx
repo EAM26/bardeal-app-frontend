@@ -6,6 +6,7 @@ import './AlarmIntakeForm.css'
 import '../../../components/button/Button.css'
 import handleIntakeForm from "../../../utils/postForm.js";
 import FloatingMessage from "../../../components/floatingMessage/FloatingMessage.jsx";
+import InnerRowCBs from "../../../components/InnerRowCBs.jsx";
 import {
     ORGANIZATION_ADDRESS,
     ORGANIZATION_EMAIL,
@@ -63,15 +64,15 @@ function AlarmIntakeForm() {
 
     });
 
-    const buildingOptions = [
-        {label: 'Woning', value: 'doResidence'},
-        {label: 'Bedrijf', value: 'doCompany'},
-        {label: 'Winkel/showroom', value: 'doShop'},
-        {label: 'Magazijn/opslag', value: 'doWarehouse'},
-        {label: 'Onderwijsinstelling', value: 'doSchool'},
-        {label: '(Semi) overheidsinstelling', value: 'doGovernment'},
-        {label: 'Anders, namelijk:', value: 'doOther'}
-    ];
+    // const buildingOptions = [
+    //     {label: 'Woning', value: 'doResidence'},
+    //     {label: 'Bedrijf', value: 'doCompany'},
+    //     {label: 'Winkel/showroom', value: 'doShop'},
+    //     {label: 'Magazijn/opslag', value: 'doWarehouse'},
+    //     {label: 'Onderwijsinstelling', value: 'doSchool'},
+    //     {label: '(Semi) overheidsinstelling', value: 'doGovernment'},
+    //     {label: 'Anders, namelijk:', value: 'doOther'}
+    // ];
 
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
@@ -79,20 +80,18 @@ function AlarmIntakeForm() {
         setFormData(prev => {
             const updated = {...prev};
 
-            // 1. Eerst checken of het een checkbox is
             if (type === 'checkbox') {
                 updated[name] = checked;
 
-                // Speciale regel: als het de 'doOther' checkbox is
+
                 if (name === 'doOther' && !checked) {
-                    updated.doOtherText = ''; // ❗ Maak tekstveld leeg als afgevinkt
+                    updated.doOtherText = '';
                 }
             }
-            // 2. Voor gewone tekstvelden, radiobuttons etc.
+
             else {
                 updated[name] = value;
 
-                // Speciale regels die je eerder al had
                 if (name === 'designatedObject' && value !== 'Anders, namelijk:') {
                     updated.customDesignatedObject = '';
                 }
@@ -344,34 +343,52 @@ function AlarmIntakeForm() {
                     <h3>Aanduiding object</h3>
 
                     <div className="block">
-                        <FormRow
-                            showLabel={false}
-                            rowName="designatedObject">
-                            {buildingOptions.map(({label, value}) => (
-                                <div key={value}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            name={value}
-                                            checked={formData[value]}
-                                            onChange={handleChange}
-                                        />
-                                        {label}
-                                    </label>
-                                    {value === 'doOther' && (
-                                        <input
-                                            type="text"
-                                            name="doOtherText"
-                                            value={formData.doOtherText}
-                                            onChange={handleChange}
-                                            placeholder="Vul hier uw alternatief in"
-                                            disabled={!formData.doOther}
-                                        />
-                                    )}
-                                </div>
-                            ))}
-
+                        <FormRow showLabel={false} rowName="designatedObject">
+                            <InnerRowCBs
+                                name="designatedObject"
+                                selected={formData}
+                                onChange={handleChange}
+                                options={[
+                                    { label: 'Woning', value: 'doResidence' },
+                                    { label: 'Bedrijf', value: 'doCompany' },
+                                    { label: 'Winkel/showroom', value: 'doShop' },
+                                    { label: 'Magazijn/opslag', value: 'doWarehouse' },
+                                    { label: 'Onderwijsinstelling', value: 'doSchool' },
+                                    { label: '(Semi) overheidsinstelling', value: 'doGovernment' },
+                                    { label: 'Anders, namelijk:', value: 'doOther' },
+                                ]}
+                                multiSplit={[4, 6]} // ✅ SPLIT at indexes 4 and 6
+                            />
                         </FormRow>
+
+                        {/*<FormRow*/}
+                        {/*    showLabel={false}*/}
+                        {/*    rowName="designatedObject">*/}
+                        {/*    {buildingOptions.map(({label, value}) => (*/}
+                        {/*        <div key={value}>*/}
+                        {/*            <label>*/}
+                        {/*                <input*/}
+                        {/*                    type="checkbox"*/}
+                        {/*                    name={value}*/}
+                        {/*                    checked={formData[value]}*/}
+                        {/*                    onChange={handleChange}*/}
+                        {/*                />*/}
+                        {/*                {label}*/}
+                        {/*            </label>*/}
+                        {/*            {value === 'doOther' && (*/}
+                        {/*                <input*/}
+                        {/*                    type="text"*/}
+                        {/*                    name="doOtherText"*/}
+                        {/*                    value={formData.doOtherText}*/}
+                        {/*                    onChange={handleChange}*/}
+                        {/*                    placeholder="Vul hier uw alternatief in"*/}
+                        {/*                    disabled={!formData.doOther}*/}
+                        {/*                />*/}
+                        {/*            )}*/}
+                        {/*        </div>*/}
+                        {/*    ))}*/}
+
+                        {/*</FormRow>*/}
                     </div>
                     <h3>Eisende partij</h3>
                     <div className="block no-break">
@@ -420,18 +437,48 @@ function AlarmIntakeForm() {
                             />
                         </FormRow>
                     </div>
-                    <div className="block">
+                    <div className="block ">
                         <h3>Geconstateerde risicoklasse conform VRKI 2.0</h3>
-                        <FormRow showLabel={false}>
-                            <InnerRowRBs
-                                type="radio"
-                                name="riskClass"
-                                selected={formData.riskClass || ''}
-                                onChange={handleChange}
-                                options={['Klasse 1', 'Klasse 2', 'Klasse 3', 'Klasse 4']}
-                                split={false}
-                            />
+                        <FormRow
+                        showLabel={false}>
+                            <div className="risk-class"><label className="flex-item">
+                                <input
+                                    type="radio"
+                                    name="riskClass"
+                                    value="Klasse 1"
+                                    onChange={handleChange}
+                                />Klasse 1</label><label className="flex-item">
+                                <input
+                                    type="radio"
+                                    name="riskClass"
+                                    value="Klasse 2"
+                                    onChange={handleChange}
+                                />Klasse 2</label><label className="flex-item">
+                                <input
+                                    type="radio"
+                                    name="riskClass"
+                                    value="Klasse 3"
+                                    onChange={handleChange}
+                                />Klasse 3</label><label className="flex-item">
+                                <input
+                                    type="radio"
+                                    name="riskClass"
+                                    value="Klasse 4"
+                                    onChange={handleChange}
+                                />Klasse 4</label></div>
+
                         </FormRow>
+                        {/*<FormRow showLabel={false}>*/}
+                        {/*    <InnerRowRBs*/}
+                        {/*        className="evenly-spaced-options"*/}
+                        {/*        type="radio"*/}
+                        {/*        name="riskClass"*/}
+                        {/*        selected={formData.riskClass || ''}*/}
+                        {/*        onChange={handleChange}*/}
+                        {/*        options={['Klasse 1', 'Klasse 2', 'Klasse 3', 'Klasse 4']}*/}
+                        {/*        split={false}*/}
+                        {/*    />*/}
+                        {/*</FormRow>*/}
                     </div>
                     <div className="block"><h3>Geadviseerde combinatie van maatregelen conform geconstateerde
                         risicoklasse VRKI 2.0</h3>

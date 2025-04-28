@@ -11,12 +11,7 @@
 label {
     display: inline-flex;
     align-items: center;
-    padding: 5px 8px; /* Space inside the label */
-    /*border: 1px solid #ccc; !* Outline around each option *!*/
-    /*border-radius: 4px; !* Rounded corners *!*/
-    /*margin: 3px; !* Space around each label *!*/
-    /*background-color: #f0f0f0; !* Subtle background color *!*/
-    /*transition: background-color 0.2s ease; !* Smooth transition *!*/
+    padding: 5px 8px;
 }
 
 label:hover {
@@ -34,7 +29,7 @@ input[type="radio"], input[type="checkbox"] {
 .column-split {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* space between the two vertical radios */
+    gap: 2px; /* space between the two vertical radios */
 }
 
 .split > .column-split {
@@ -50,5 +45,24 @@ input[type="radio"], input[type="checkbox"] {
 
 
 .split div, .not_split {
-    margin-bottom: 5px; /* Space between rows when wrapped */
+    /*margin-bottom: 5px; !* Space between rows when wrapped *!*/
 }
+
+.split-line > .column-split:first-child {
+    border-right: 1px solid black; /* light grey vertical line */
+    padding-right: 15px;
+}
+
+.split-line > .column-split:last-child {
+    padding-left: 15px; /* optional: space between border and content */
+}
+
+.evenly-spaced-options {
+    justify-content: flex-start;
+    gap: 200px;
+    padding-right: 50px;
+}
+
+
+
+
