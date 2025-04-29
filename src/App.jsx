@@ -11,6 +11,7 @@ import Navbar from "./components/navbar/Navbar.jsx";
 
 import Login from "./pages/Login.jsx";
 import {useUser} from "./context/useUser.js";
+// import MyForm from "./pages/testpages/MyForm.jsx";
 
 function App() {
     const {user, loading} = useUser();
@@ -22,9 +23,11 @@ function App() {
             <UserContextProvider>
                 {user && <Navbar/>}
                 <Routes>
+                    {/*<Route path="/myform"  element={<MyForm/>}/>*/}
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/" element={user ? <Home/> : <Navigate to="/login"/>}/>
-                    <Route path="/alarm" element={user ? <AlarmIntakeForm/> : <Navigate to="/login"/>}/>
+                    {/*<Route path="/alarm" element={user ? <AlarmIntakeForm/> : <Navigate to="/login"/>}/>*/}
+                    <Route path="/alarm" element={ <AlarmIntakeForm/>}/>
                     <Route path="/alarms"
                            element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Alarms/> :
                                <Navigate to="/login"/>}/>

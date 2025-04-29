@@ -2,16 +2,21 @@ import React, {useEffect, useState} from 'react';
 import Button from "../../components/button/Button.jsx";
 import './user.css'
 import axios from "axios";
+import {useUser} from "../../context/useUser.js";
+import FloatingMessage from "../../components/floatingMessage/FloatingMessage.jsx";
 
 
 function User() {
 
+    const [statusMessage, setStatusMessage] = useState(null);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         role: '',
         companyId: ''
     });
+
+    const user = useUser();
 
     const [companies, setCompanies] = useState([]);
 
@@ -23,23 +28,35 @@ function User() {
     async function handleSubmit(e) {
         e.preventDefault();
         console.log(formData);
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/users`, formData, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        console.log("Form role: ", formData.role);
 
-        if (response.status === 201) {
-            console.log("Created user  ", response.data);
-        } else {
-            console.log("Error creating user");
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/users`, formData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            setStatusMessage({type: 'success', message: 'User: '+ response.data.username +', successfully created.'});
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            window.location.reload();
+
+        } catch (e) {
+            setStatusMessage({
+                type: 'error', message: 'Error in creating User: ' +
+                    e.response.data
+            });
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            setStatusMessage(null)
+            console.error(e);
         }
-
+        setStatusMessage(null);
     }
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log(user)
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/companies`, {
                     withCredentials: true
@@ -55,6 +72,9 @@ function User() {
 
     return (
         <div>
+            {statusMessage && (
+                <FloatingMessage type={statusMessage.type} message={statusMessage.message}/>
+            )}
             <form
                 className="user-form"
                 onSubmit={handleSubmit}>
@@ -82,7 +102,8 @@ function User() {
                             id="role"
                             value={formData.role}
                             onChange={handleChange}>
-                            <option value="ADMIM">ADMIN</option>
+                            <option value="">-- Select Role --</option>
+                            <option value="ADMIN">ADMIN</option>
                             <option value="MANAGER">MANAGER</option>
                             <option value="USER">USER</option>
                         </select></div>
@@ -93,6 +114,7 @@ function User() {
                             value={formData.companyId}
                             onChange={handleChange}
                         >
+                            <option value="">-- Select Company --</option>
                             {
                                 companies.map((company) => (
                                     <option key={company.id} value={company.id}>{company.name}</option>

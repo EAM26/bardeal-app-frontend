@@ -1,24 +1,25 @@
 .form-row {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     border: 1px solid black;
-    padding: 1px 5px;
+    /*padding: 0 5px;*/
     gap: 10px;
     font-size: 12px;
-    /*background-color: green;*/
 }
 
 .form-row-label {
-    flex: 0 0 20%; /* Fixed 25% when label is present */
-    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    flex: 0 0 20%;
     white-space: nowrap;
+    border-right: 1px solid black;
 
 }
 
 .form-row-content {
-    flex: 1; /* Take the remaining 75% when label is present */
+    flex: 1;
 }
 
 .form-row-full {
-    flex: 1; /* Full width when no label */
+    flex: 1;
 }

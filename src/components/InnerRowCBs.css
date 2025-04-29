@@ -1,0 +1,17 @@
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    /*gap: 1em;*/
+}
+
+.checkbox-row {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}

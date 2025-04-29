@@ -9,6 +9,12 @@
 body {
   background-color: #ff6400;
   font-family: Arial, Helvetica, sans-serif;
+  min-width: 1000px;
+}
+
+.outer {
+  padding: 10px 25px;
+  background-color: wheat;
 }
 
 

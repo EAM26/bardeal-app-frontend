@@ -1,7 +1,7 @@
 import React from 'react';
 import './InnerRowRBs.css'
 
-function InnerRowRBs({ type, name, selected, onChange, options = [], split, splitValue,}) {
+function InnerRowRBs({ type, name, selected, onChange, options = [], split, splitValue, firstOptionAlignCenter = false, className = '' }) {
     const isCheckbox = type === 'checkbox';
 
     const isChecked = (option) => {
@@ -23,10 +23,12 @@ function InnerRowRBs({ type, name, selected, onChange, options = [], split, spli
             onChange(e);
         }
     };
-
-    const renderOptions = (subset) =>
-        subset.map((option) => (
-            <label key={option}>
+    const renderOptions = (subset, columnIndex) =>
+        subset.map((option, index) => (
+            <label
+                key={option}
+                className={firstOptionAlignCenter && columnIndex === 0 && index === 0 ? 'center-vertical' : ''}
+            >
                 <input
                     type={type}
                     name={name}
@@ -38,19 +40,21 @@ function InnerRowRBs({ type, name, selected, onChange, options = [], split, spli
             </label>
         ));
 
+
     return (
-        <div className="not_split">
-            {!split ? (
+        // <div className="not_split">
+        <div className={`not_split ${split ? 'split' : ''} ${className}`}>
+
+        {!split ? (
                 renderOptions(options)
             ) : (
-                // <div className="split">
-                //     <div>{renderOptions(options.slice(0, splitValue))}</div>
-                //     <div>{renderOptions(options.slice(splitValue))}</div>
-                //
-                // </div>
-                <div className="split">
-                    <div>{renderOptions(options.slice(0, splitValue))}</div>
-                    <div className="column-split">{renderOptions(options.slice(splitValue))}</div>
+                <div className={`split ${firstOptionAlignCenter ? 'split-line' : ''}`}>
+                    <div className="column-split">
+                        {renderOptions(options.slice(0, splitValue), 0)}
+                    </div>
+                    <div className="column-split">
+                        {renderOptions(options.slice(splitValue), 1)}
+                    </div>
                 </div>
 
             )}
