@@ -27,8 +27,8 @@ dist-ssr
 /src/pages/testpages/testform.html
 /src/pages/testpages/testformstyle.css
 /.env
-/src/components/MyRow.css
-/src/components/MyRow.jsx
-/src/components/RowOptions.js
-/src/pages/testpages/MyForm.css
-/src/pages/testpages/MyForm.jsx
+/src/old/MyRow.css
+/src/old/MyRow.jsx
+/src/old/RowOptions.js
+/src/old/MyForm.css
+/src/old/MyForm.jsx

@@ -9,8 +9,9 @@ import UserContextProvider from "./context/UserContext.jsx";
 
 import Navbar from "./components/navbar/Navbar.jsx";
 
-import Login from "./pages/Login.jsx";
+import Login from "./pages/login/Login.jsx";
 import {useUser} from "./context/useUser.js";
+import Companies from "./pages/companies/Companies.jsx";
 // import MyForm from "./pages/testpages/MyForm.jsx";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                                <Navigate to="/login"/>}/>
                     <Route path="/user" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <User/> : <Navigate to="/login"/>}/>
                     <Route path="/users" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Users/> : <Navigate to="/login"/>}/>
+                    <Route path="/companies" element={user && (user.role === 'ADMIN') ? <Companies/> : <Navigate to="/login"/>}/>
                 </Routes></UserContextProvider>
         </>
     );
