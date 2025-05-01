@@ -26,6 +26,7 @@ function App() {
                 <Routes>
                     {/*<Route path="/myform"  element={<MyForm/>}/>*/}
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/companies" element={<Companies/>}/>
                     <Route path="/" element={user ? <Home/> : <Navigate to="/login"/>}/>
                     {/*<Route path="/alarm" element={user ? <AlarmIntakeForm/> : <Navigate to="/login"/>}/>*/}
                     <Route path="/alarm" element={ <AlarmIntakeForm/>}/>
@@ -34,8 +35,9 @@ function App() {
                                <Navigate to="/login"/>}/>
                     <Route path="/user" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <User/> : <Navigate to="/login"/>}/>
                     <Route path="/users" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Users/> : <Navigate to="/login"/>}/>
-                    <Route path="/companies" element={user && (user.role === 'ADMIN') ? <Companies/> : <Navigate to="/login"/>}/>
-                </Routes></UserContextProvider>
+                    {/*<Route path="/companies" element={user && (user.role === 'ADMIN') ? <Companies/> : <Navigate to="/login"/>}/>*/}
+                </Routes>
+            </UserContextProvider>
         </>
     );
 }

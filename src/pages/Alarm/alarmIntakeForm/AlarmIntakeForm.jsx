@@ -6,7 +6,7 @@ import './AlarmIntakeForm.css'
 import '../../../components/button/Button.css'
 import handleIntakeForm from "../../../utils/postForm.js";
 import FloatingMessage from "../../../components/floatingMessage/FloatingMessage.jsx";
-import InnerRowCBs from "../../../components/InnerRowCBs.jsx";
+import InnerRowCBs from "../../../components/innRobCBs/InnerRowCBs.jsx";
 import {
     ORGANIZATION_ADDRESS,
     ORGANIZATION_EMAIL,
