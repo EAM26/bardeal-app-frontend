@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FormRow from "../../../components/formrow/FormRow.jsx";
 import Button from "../../../components/button/Button.jsx";
 import InnerRowRBs from "../../../components/innerRowRBs/InnerRowRBs.jsx";
@@ -7,16 +7,16 @@ import '../../../components/button/Button.css'
 import handleIntakeForm from "../../../utils/postForm.js";
 import FloatingMessage from "../../../components/floatingMessage/FloatingMessage.jsx";
 import InnerRowCBs from "../../../components/innRobCBs/InnerRowCBs.jsx";
-import {
-    ORGANIZATION_ADDRESS,
-    ORGANIZATION_EMAIL,
-    ORGANIZATION_NAME,
-    ORGANIZATION_PHONE,
-    ORGANIZATIONZIPCODE_PLACE
-} from "../../../companyConfig.js";
+
+import axios from "axios";
+import {useUser} from '../../../context/useUser.js'
 
 function AlarmIntakeForm() {
     const [statusMessage, setStatusMessage] = useState(null);
+    const [userCompany, setUserCompany] = useState(null);
+    const { user, loading } = useUser();
+    // console.log("User is: " , user.username);
+
     const [formData, setFormData] = useState({
         version: '',
         date: '',
@@ -73,6 +73,8 @@ function AlarmIntakeForm() {
     //     {label: '(Semi) overheidsinstelling', value: 'doGovernment'},
     //     {label: 'Anders, namelijk:', value: 'doOther'}
     // ];
+
+
 
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
@@ -174,6 +176,22 @@ function AlarmIntakeForm() {
 
 
     }
+
+    useEffect(() => {
+        const fetchCompany = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/companies/my-company`, {
+                    withCredentials: true
+                });
+                setUserCompany(response.data);
+            } catch (error) {
+                console.error("Error fetching company", error);
+            }
+        };
+
+        void fetchCompany();
+    }, []);
+
 
     return (
         <div className="outer_container">
@@ -289,40 +307,46 @@ function AlarmIntakeForm() {
                         showLabel={true}
                         rowName="Beveiligingsbedrijf"
                     >
-                        <p>{ORGANIZATION_NAME}</p>
+                        <p>{userCompany ? userCompany.name : "Laden..."}</p>
                     </FormRow>
                         <FormRow
                             showLabel={true}
                             rowName="Adres"
                         >
-                            <p>{ORGANIZATION_ADDRESS}</p>
+                            <p>{userCompany ? userCompany.address : "Laden..."}</p>
                         </FormRow>
                         <FormRow
                             showLabel={true}
                             rowName="Postcode/Plaats"
                         >
-                            <p>{ORGANIZATIONZIPCODE_PLACE}</p>
+                            <p>{userCompany ? `${userCompany.zipcode} ${userCompany.city}` : "Laden..."}</p>
                         </FormRow>
                         <FormRow
                             showLabel={true}
                             rowName="TelefoonNummer"
                         >
-                            <p>{ORGANIZATION_PHONE}</p>
+                            <p>{userCompany ? userCompany.phoneNumber : "Laden..."}</p>
                         </FormRow>
                         <FormRow
                             showLabel={true}
                             rowName="E-mailadres"
                         >
-                            <p>{ORGANIZATION_EMAIL}</p>
+                            <p>{userCompany ? userCompany.email : "Laden..."}</p>
+
                         </FormRow>
-                        <FormRow showLabel={true} rowName="Intakedocument opgesteld door: ">
-                            <input
-                                type="text"
-                                name="employee"
-                                value={formData.employee}
-                                onChange={handleChange}
-                                placeholder="Bevoegd persoon Naam"
-                            />
+                        <FormRow
+                            showLabel={true}
+                            rowName="Intakedocument opgesteld door: ">
+                            <p>{user && user.username}</p>
+                            {/*<p>{user && user.username ? user.username : "Laden..."}</p>*/}
+
+                            {/*<input*/}
+                            {/*    type="text"*/}
+                            {/*    name="employee"*/}
+                            {/*    value={formData.employee}*/}
+                            {/*    onChange={handleChange}*/}
+                            {/*    placeholder="Bevoegd persoon Naam"*/}
+                            {/*/>*/}
                         </FormRow>
                         <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
                             <div>
