@@ -41,6 +41,7 @@ function App() {
                     <Route path="/users"
                            element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Users/> :
                                <Navigate to="/no-access"/>}/>
+                    <Route path="/*" element={<NoAccess/>}/>
                 </Routes>
             </UserContextProvider>
         </>
