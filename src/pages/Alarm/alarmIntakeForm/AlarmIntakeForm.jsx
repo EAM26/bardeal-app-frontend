@@ -14,7 +14,7 @@ import {useUser} from '../../../context/useUser.js'
 function AlarmIntakeForm() {
     const [statusMessage, setStatusMessage] = useState(null);
     const [userCompany, setUserCompany] = useState(null);
-    const { user, loading } = useUser();
+    const {user} = useUser();
     // console.log("User is: " , user.username);
 
     const [formData, setFormData] = useState({
@@ -39,6 +39,10 @@ function AlarmIntakeForm() {
         doOther: false,
         doOtherText: '',
         customDesignatedObject: '',
+        companyLow: '',
+        companyMiddle: '',
+        companyHigh: '',
+        companyVeryHigh: '',
         requestingParty: '',
         customRequestingParty: '',
         housesValue: '',
@@ -64,18 +68,6 @@ function AlarmIntakeForm() {
 
     });
 
-    // const buildingOptions = [
-    //     {label: 'Woning', value: 'doResidence'},
-    //     {label: 'Bedrijf', value: 'doCompany'},
-    //     {label: 'Winkel/showroom', value: 'doShop'},
-    //     {label: 'Magazijn/opslag', value: 'doWarehouse'},
-    //     {label: 'Onderwijsinstelling', value: 'doSchool'},
-    //     {label: '(Semi) overheidsinstelling', value: 'doGovernment'},
-    //     {label: 'Anders, namelijk:', value: 'doOther'}
-    // ];
-
-
-
     const handleChange = (e) => {
         const {name, value, type, checked} = e.target;
 
@@ -89,9 +81,7 @@ function AlarmIntakeForm() {
                 if (name === 'doOther' && !checked) {
                     updated.doOtherText = '';
                 }
-            }
-
-            else {
+            } else {
                 updated[name] = value;
 
                 if (name === 'designatedObject' && value !== 'Anders, namelijk:') {
@@ -338,15 +328,6 @@ function AlarmIntakeForm() {
                             showLabel={true}
                             rowName="Intakedocument opgesteld door: ">
                             <p>{user && user.username}</p>
-                            {/*<p>{user && user.username ? user.username : "Laden..."}</p>*/}
-
-                            {/*<input*/}
-                            {/*    type="text"*/}
-                            {/*    name="employee"*/}
-                            {/*    value={formData.employee}*/}
-                            {/*    onChange={handleChange}*/}
-                            {/*    placeholder="Bevoegd persoon Naam"*/}
-                            {/*/>*/}
                         </FormRow>
                         <FormRow showLabel={true} rowName="Maatregelen uit te voeren onder:">
                             <div>
@@ -365,7 +346,6 @@ function AlarmIntakeForm() {
                         </FormRow>
                     </div>
                     <h3>Aanduiding object</h3>
-
                     <div className="block">
                         <FormRow showLabel={false} rowName="designatedObject">
                             <InnerRowCBs
@@ -373,46 +353,17 @@ function AlarmIntakeForm() {
                                 selected={formData}
                                 onChange={handleChange}
                                 options={[
-                                    { label: 'Woning', value: 'doResidence' },
-                                    { label: 'Bedrijf', value: 'doCompany' },
-                                    { label: 'Winkel/showroom', value: 'doShop' },
-                                    { label: 'Magazijn/opslag', value: 'doWarehouse' },
-                                    { label: 'Onderwijsinstelling', value: 'doSchool' },
-                                    { label: '(Semi) overheidsinstelling', value: 'doGovernment' },
-                                    { label: 'Anders, namelijk:', value: 'doOther' },
+                                    {label: 'Woning', value: 'doResidence'},
+                                    {label: 'Bedrijf', value: 'doCompany'},
+                                    {label: 'Winkel/showroom', value: 'doShop'},
+                                    {label: 'Magazijn/opslag', value: 'doWarehouse'},
+                                    {label: 'Onderwijsinstelling', value: 'doSchool'},
+                                    {label: '(Semi) overheidsinstelling', value: 'doGovernment'},
+                                    {label: 'Anders, namelijk:', value: 'doOther'},
                                 ]}
-                                multiSplit={[4, 6]} // ✅ SPLIT at indexes 4 and 6
+                                multiSplit={[4, 6]}
                             />
                         </FormRow>
-
-                        {/*<FormRow*/}
-                        {/*    showLabel={false}*/}
-                        {/*    rowName="designatedObject">*/}
-                        {/*    {buildingOptions.map(({label, value}) => (*/}
-                        {/*        <div key={value}>*/}
-                        {/*            <label>*/}
-                        {/*                <input*/}
-                        {/*                    type="checkbox"*/}
-                        {/*                    name={value}*/}
-                        {/*                    checked={formData[value]}*/}
-                        {/*                    onChange={handleChange}*/}
-                        {/*                />*/}
-                        {/*                {label}*/}
-                        {/*            </label>*/}
-                        {/*            {value === 'doOther' && (*/}
-                        {/*                <input*/}
-                        {/*                    type="text"*/}
-                        {/*                    name="doOtherText"*/}
-                        {/*                    value={formData.doOtherText}*/}
-                        {/*                    onChange={handleChange}*/}
-                        {/*                    placeholder="Vul hier uw alternatief in"*/}
-                        {/*                    disabled={!formData.doOther}*/}
-                        {/*                />*/}
-                        {/*            )}*/}
-                        {/*        </div>*/}
-                        {/*    ))}*/}
-
-                        {/*</FormRow>*/}
                     </div>
                     <h3>Eisende partij</h3>
                     <div className="block no-break">
@@ -425,7 +376,7 @@ function AlarmIntakeForm() {
                                 split={true}
                                 splitValue={2}
                                 options={['Bewoner/ eigenaar/ beheerder', 'Anders, namelijk:', 'Verzekeraar'
-                                    ]}/>
+                                ]}/>
                             {formData.requestingParty === 'Anders, namelijk:' && (
                                 <input
                                     type="text"
@@ -449,22 +400,39 @@ function AlarmIntakeForm() {
                                 onChange={handleChange}
                             />
                         </FormRow>
-                        <FormRow showLabel={true} rowName="Bedrijven">
-                            <InnerRowRBs
-                                type="radio"
-                                name="companiesValue"
+                        <FormRow
+                            showLabel={true}
+                            rowName="Bedrijven"
+                        >
+                            <InnerRowCBs
+                                name="customCompanyValues"
+                                selected={formData}
                                 onChange={handleChange}
-                                selected={formData.companiesValue || ''}
-                                options={['Laag €', 'Midden €', 'Hoog €', 'Zeer Hoog €']}
-                                split={true}
-                                splitValue={2}
+                                options={[
+                                    {label: 'Laag', value: 'companyLow'},
+                                    {label: 'Hoog', value: 'companyHigh'},
+                                    {label: 'Midden', value: 'companyMiddle'},
+                                    {label: 'Zeer Hoog', value: 'companyVeryHigh'},
+                                ]}
+                                multiSplit={[2]}
                             />
                         </FormRow>
+                        {/*<FormRow showLabel={true} rowName="Bedrijven">*/}
+                        {/*    <InnerRowRBs*/}
+                        {/*        type="radio"*/}
+                        {/*        name="companiesValue"*/}
+                        {/*        onChange={handleChange}*/}
+                        {/*        selected={formData.companiesValue || ''}*/}
+                        {/*        options={['Laag €', 'Midden €', 'Hoog €', 'Zeer Hoog €']}*/}
+                        {/*        split={true}*/}
+                        {/*        splitValue={2}*/}
+                        {/*    />*/}
+                        {/*</FormRow>*/}
                     </div>
                     <div className="block ">
                         <h3>Geconstateerde risicoklasse conform VRKI 2.0</h3>
                         <FormRow
-                        showLabel={false}>
+                            showLabel={false}>
                             <div className="risk-class"><label className="flex-item">
                                 <input
                                     type="radio"
@@ -492,17 +460,6 @@ function AlarmIntakeForm() {
                                 />Klasse 4</label></div>
 
                         </FormRow>
-                        {/*<FormRow showLabel={false}>*/}
-                        {/*    <InnerRowRBs*/}
-                        {/*        className="evenly-spaced-options"*/}
-                        {/*        type="radio"*/}
-                        {/*        name="riskClass"*/}
-                        {/*        selected={formData.riskClass || ''}*/}
-                        {/*        onChange={handleChange}*/}
-                        {/*        options={['Klasse 1', 'Klasse 2', 'Klasse 3', 'Klasse 4']}*/}
-                        {/*        split={false}*/}
-                        {/*    />*/}
-                        {/*</FormRow>*/}
                     </div>
                     <div className="block"><h3>Geadviseerde combinatie van maatregelen conform geconstateerde
                         risicoklasse VRKI 2.0</h3>
