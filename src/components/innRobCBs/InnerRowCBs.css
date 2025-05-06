@@ -8,6 +8,7 @@
     display: flex;
     gap: 1em;
     align-items: center;
+
 }
 
 .checkbox-item {
@@ -15,3 +16,15 @@
     align-items: center;
     gap: 0.5em;
 }
+
+input[type="text"],
+input[type="number"] {
+    padding: 0 4px;
+    height: auto;
+    min-height: 18px;
+    box-sizing: border-box;
+    font-size: 12px;
+    vertical-align: middle;
+    overflow: visible;
+}
+

@@ -1,12 +1,12 @@
 import React from 'react';
 import './Login.css';
-import Button from "../components/button/Button.jsx";
+import Button from "../../components/button/Button.jsx";
 
 
 function Login() {
     return (
         <div className="log-outer-container">
-            {/*<h1>Login Page</h1>*/}
+            {/*<h1>login Page</h1>*/}
 
             <Button classname='general-button login-button' onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`
             }>  Login with Google

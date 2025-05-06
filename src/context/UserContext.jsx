@@ -14,6 +14,7 @@ export default function UserContextProvider({ children }) {
                     withCredentials: true
                 });
                 setUser(response.data);
+                console.log("user fetch user", response.data);
             } catch (error) {
                 if (error.response && error.response.status !== 401) {
                     console.error("Unexpected error fetching user:", error);

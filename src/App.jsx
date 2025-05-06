@@ -9,8 +9,10 @@ import UserContextProvider from "./context/UserContext.jsx";
 
 import Navbar from "./components/navbar/Navbar.jsx";
 
-import Login from "./pages/Login.jsx";
+import Login from "./pages/login/Login.jsx";
 import {useUser} from "./context/useUser.js";
+import NoAccess from "./pages/no-access/NoAccess.jsx";
+
 // import MyForm from "./pages/testpages/MyForm.jsx";
 
 function App() {
@@ -23,17 +25,25 @@ function App() {
             <UserContextProvider>
                 {user && <Navbar/>}
                 <Routes>
-                    {/*<Route path="/myform"  element={<MyForm/>}/>*/}
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/no-access" element={<NoAccess/>}/>
                     <Route path="/" element={user ? <Home/> : <Navigate to="/login"/>}/>
-                    {/*<Route path="/alarm" element={user ? <AlarmIntakeForm/> : <Navigate to="/login"/>}/>*/}
-                    <Route path="/alarm" element={ <AlarmIntakeForm/>}/>
+                    <Route path="/alarm" element={user ? <AlarmIntakeForm/> : <Navigate to="/login"/>}/>
                     <Route path="/alarms"
                            element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Alarms/> :
-                               <Navigate to="/login"/>}/>
-                    <Route path="/user" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <User/> : <Navigate to="/login"/>}/>
-                    <Route path="/users" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Users/> : <Navigate to="/login"/>}/>
-                </Routes></UserContextProvider>
+                               <Navigate to="/no-access"/>}/>
+
+                    <Route path="/companies" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ?
+                        <Alarms/> : <Navigate to="/no-access"/>}/>
+
+                    <Route path="/user" element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <User/> :
+                        <Navigate to="/no-access"/>}/>
+                    <Route path="/users"
+                           element={user && (user.role === 'ADMIN' || user.role === 'MANAGER') ? <Users/> :
+                               <Navigate to="/no-access"/>}/>
+                    <Route path="/*" element={<NoAccess/>}/>
+                </Routes>
+            </UserContextProvider>
         </>
     );
 }
